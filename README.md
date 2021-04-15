@@ -77,9 +77,11 @@ can:
 ```
 
 ## Sensors
+```
    BME280 - Zephyr sensor driver
    AM2320
    BH1750 - 4lux resolution
+```   
 
 ## ADC 
    from ACS712 measure 50Hz   

@@ -30,50 +30,11 @@ LOG_MODULE_REGISTER(app);
 #endif
 
 static const struct device *green_led = DEVICE_DT_GET(DT_NODELABEL(gpioc));	
-// static uint32_t counter;
 
 static void led_callback(bool value, void *arg)
 {
 	gpio_pin_set(green_led, 13, value);
 }
-
-/**
- * @brief Button press counter object dictionary handler function.
- *
- * This function is called upon SDO access to the button press counter
- * object (index 0x2102) in the object dictionary.
- *
- * @param odf_arg object dictionary function argument.
- *
- * @return SDO abort code.
- */
-// static CO_SDO_abortCode_t odf_2102(CO_ODF_arg_t *odf_arg)
-// {
-// 	uint32_t value;
-
-// 	value = CO_getUint32(odf_arg->data);
-
-// 	if (odf_arg->reading) {
-// 		return CO_SDO_AB_NONE;
-// 	}
-
-// 	if (odf_arg->subIndex != 0U) {
-// 		return CO_SDO_AB_NONE;
-// 	}
-
-// 	if (value != 0) {
-// 		/* Preserve old value */
-// 		memcpy(odf_arg->data, odf_arg->ODdataStorage, sizeof(uint32_t));
-// 		return CO_SDO_AB_DATA_TRANSF;
-// 	}
-
-// 	LOG_INF("Resetting button press counter");
-// 	counter = 0;
-
-// 	return CO_SDO_AB_NONE;
-// }
-
-
 
 void main(void)
 {
@@ -111,8 +72,6 @@ void main(void)
 	}
 #endif /* CONFIG_CANOPEN_STORAGE */
 	
-    // OD_powerOnCounter++;
-
 	while (reset != CO_RESET_APP) 
 	{
 		elapsed =  0U; /* milliseconds */
