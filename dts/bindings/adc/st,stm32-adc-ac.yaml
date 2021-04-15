@@ -1,0 +1,30 @@
+# Copyright (c) 2018, Endre Karlson
+# Copyright (c) 2018, Song Qiang <songqiang1304521@gmail.com>
+# SPDX-License-Identifier: Apache-2.0
+
+description: ST STM32F1x family ADC 50 Hz AC current mesure
+
+compatible: "st,stm32f1-adc1-ac"
+
+include: st,stm32-adc.yaml
+
+properties:
+    trigger:
+      required: true
+      type: string
+      enum:
+        - "tim1-cc1"
+        - "tim1-cc2"
+        - "tim1-cc3"
+        - "tim2-cc2"
+        - "tim4-cc4"
+      description: |
+        An external trigger is selected for ADC regular conversion, only the rising
+        edge of the signal can start the conversion.  
+        TIM1_CC1  event 000  tim1-cc1
+        TIM1_CC2  event 001  tim1-cc2
+        TIM1_CC3  event 010  tim1-cc3
+        TIM2_CC2  event 011  tim2-cc2
+        TIM3_TRGO event 100  tim3-trgo unsupports
+        TIM4_CC4  event 101  tim4-cc4            
+           trigger = "tim2-cc2";

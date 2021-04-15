@@ -1,0 +1,163 @@
+/*
+ * Copyright (c) 2019 Vestas Wind Systems A/S
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/ {
+	chosen {
+		zephyr,can-primary = &can1;
+		zephyr,code-partition = &slot0_partition;
+	};
+
+	keys {
+		compatible = "gpio-keys";
+
+		key: key {
+			gpios = <&gpiob 12 GPIO_PULL_UP>;
+			label = "KEY";
+		};
+	};
+
+	aliases {
+		green-led = &led;
+		red-led = &led;
+		sw0 = &key;
+	};
+};
+
+&usb {
+	status = "disabled";
+};
+
+&flash0 {
+	partitions {
+			compatible = "fixed-partitions";
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			slot0_partition: partition@0 {
+				label = "image-0";
+				reg = <0 0x1e000>;
+			};
+			// slot1_partition: partition@8010000 {
+			// 	label = "image-1";
+			// 	reg = <0x08010000 0x8000>;
+			// };
+			slot2_partition: partition@1e000 {
+				label = "storage";
+				reg = <0x1e000 0x2000>;
+			};
+	};
+};
+
+&can1 {
+	pinctrl-0 = <&can_rx_pa11 &can_tx_pa12>;
+	sjw = < 1 >;
+	
+	prop-seg=< 0 >;
+	phase-seg1= < 10 >;
+	phase-seg2= < 4 >;
+	bus-speed=<100000>;
+	status = "okay";
+};
+
+&usart2 {
+	status = "disabled";
+};
+
+&usart3 {
+	status = "disabled";
+};
+
+&i2c1 {
+	status = "okay";
+	pinctrl-0 = <&i2c1_scl_pb8 &i2c1_sda_pb9>;
+	bh1750: bh1750@23 {
+		/* 0x5C - SDO <-> GND */
+		/* 0x23 - SDO <-> VCC */
+		compatible = "rohm,bh1750", "i2c-device";
+		status = "okay";
+		reg = <0x23>;
+		label = "BH1750_1";
+	};
+	am2320: am2320@5C {
+		compatible = "aosong,am2320", "i2c-device";
+		status = "okay";
+		reg = <0x5C>;
+		label = "AM2320_1";
+	};
+	bme280: bme280@76 {
+		/* 0x76 - SDO <-> GND */
+		/* 0x77 - SDO <-> VCC */
+		compatible = "bosch,bme280";
+		status = "okay";
+		reg = <0x76>;
+		label = "BME280_1";
+	};	
+};
+
+&i2c2 {
+	status = "okay";
+	pinctrl-0 = <&i2c2_scl_pb10 &i2c2_sda_pb11>;
+	bh17501: bh1750@23 {
+		/* 0x5C - SDO <-> GND */
+		/* 0x23 - SDO <-> VCC */
+		compatible = "rohm,bh1750", "i2c-device";
+		status = "okay";
+		reg = <0x23>;
+		label = "BH1750_2";
+	};
+	am23201: am2320@5C {
+		compatible = "aosong,am2320", "i2c-device";
+		status = "okay";
+		reg = <0x5C>;
+		label = "AM2320_2";
+	};
+	bme2801: bme280@76 {
+		/* 0x76 - SDO <-> GND */
+		/* 0x77 - SDO <-> VCC */
+		compatible = "bosch,bme280";
+		status = "okay";
+		reg = <0x76>;
+		label = "BME280_2";
+	};	
+};
+
+&spi1 {
+	status = "disabled";
+};
+
+&spi2 {
+	status = "disabled";
+};
+
+&pwm1 {
+	status = "disabled";
+};
+
+&timers2 {
+	status = "disabled";
+};
+
+&dma1{
+	status = "disabled";
+};
+
+&adc1 {
+	compatible = "st,stm32f1-adc1-ac", "st,stm32-adc";
+	status = "okay";
+	dmas = < &dma1 1 1 0x22C80 0>;
+	trigger = "tim2-cc2";
+	pinctrl-0 = < &adc1_in0_pa0 >,
+				< &adc1_in1_pa1 >,
+				< &adc1_in2_pa2 >,
+				< &adc1_in3_pa3 >,
+				< &adc1_in4_pa4 >,
+				< &adc1_in5_pa5 >,
+				< &adc1_in6_pa6 >,
+				< &adc1_in7_pa7 >,
+				< &adc1_in8_pb0 >,
+				< &adc1_in9_pb1 >;
+};
+

@@ -1,0 +1,9 @@
+menuconfig BH1750
+	bool "BH1750 driver"
+	help
+	  Enable BH1750 Light sensor driver configuration.
+
+if BH1750
+
+endif
+

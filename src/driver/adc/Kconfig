@@ -1,0 +1,54 @@
+
+mainmenu "Adc AC 50Hz"
+#
+# ADC options
+#
+menuconfig ADC_AC
+	bool "ADC drivers"
+	depends on !ADC && SOC_FAMILY_STM32 
+	# All platforms that implement the ADC driver are now required to
+	# provide relevant DTS entries.
+	help
+	  Enable ADC (Analog to Digital Converter) driver configuration.
+
+if ADC_AC
+
+config ADC_ASYNC
+	bool "Enable asynchronous call support"
+	select POLL
+    # select ADC_ASYNC
+	help
+	  This option enables the asynchronous API calls.
+
+config ADC_STM32_AC_CURRENT
+	bool "STM32 ADC driver for mesure 50Hz AC current AS712 sensor"
+	depends on SOC_FAMILY_STM32  && !ADC_STM32
+	select USE_STM32_LL_TIM
+	help
+	  Enable the driver implementation for the stm32xx ADC for mesure 50Hz AC current AS712 sensor
+
+if ADC_STM32_AC_CURRENT
+
+module = ADCAC
+module-str = ADCAC
+source "subsys/logging/Kconfig.template.log_config"
+
+config ADC_STM32_AC_CURRENT_SAMPLE_TIME
+	int "STM32 ADC driver sample time"
+    default 2
+	help
+	  Conversion time in ADC cycles. Many values should have been 0.5 less,
+ 	  but the adc api system currently does not support describing half cycles,
+	  so all half cycles are counted as one.	  
+	  2, 8, 14, 29, 42, 56, 72, 240
+
+config ADC_STM32_AC_CURRENT_OVERSAMPLING
+	int "STM32 ADC driver 50Hz current periods count"
+    default 64
+	help
+	  50Hz current periods count
+	  SCAN_COUNT = ADC_STM32_AC_CURRENT_OVERSAMPLING*4
+
+endif # ADC_STM32_AC_CURRENT
+
+endif # ADC

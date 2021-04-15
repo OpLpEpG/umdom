@@ -1,0 +1,9 @@
+menuconfig AM2320
+	bool "AM2320 driver"
+	help
+	  Enable AM2320 sensor driver configuration.
+
+if AM2320
+
+endif
+
