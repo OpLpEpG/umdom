@@ -19,31 +19,31 @@ can:
   PC13
 ```
 2. CAN
-'''
+```
    RD - PA11
    TD - PA12
-'''
+```
 3. I2C
-'''
+```
    I2C_1 
     SCL - PB8
     SDA - PB9
    I2C_2 
     SCL - PB10
     SDA - PB11
-'''
+```
 4. Serial 1 (debug console)
-'''
+```
    TX - PA9
    RX - PA10
-'''
+```
 5. Analog inputs 10   
-'''
+```
    PA0-PA7
    PB0-PB1
-'''
+```
 6. GPIO (3v) 
-'''
+```
     PA0-PA7 (shared with Analog inputs)
 
     PB0 (shared with Analog inputs)
@@ -52,9 +52,9 @@ can:
 
     PC14 (default output)
     PC15 (default output)
-'''
+```
 7. GPIO (5v tolerant) 12 cnt. 
-'''
+```
     PB3
     PB4
     PB6  
@@ -65,16 +65,16 @@ can:
     PA9  (Serial 1 (console))
     PA10 (Serial 1 (console))
     PA15
-'''
+```
 8. SWD 
-'''
+```
     PA13 - SWDIO
     PA14 - SWCLK
-'''
+```
 9. RESERV
-'''
+```
    PB2 - BOOT1
-'''
+```
 
 ## Sensors
    BME280 - Zephyr sensor driver
@@ -89,7 +89,7 @@ can:
 Add  timeOfDay_t TIME_OF_DAY TIME_DIFFERENCE
 before "TIME producer and consumer object."
 
-'''
+```
 .............
   #ifndef timeOfDay_t  
   typedef union {  
@@ -114,4 +114,4 @@ typedef struct{
     uint8_t            *operatingState; /**< From CO_TIME_init() */
 ..........
 
-'''
+```
