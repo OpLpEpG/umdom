@@ -15,9 +15,9 @@ can:
 
 ## Pinout
 1. LED  
-'''
+```
   PC13
-'''
+```
 2. CAN
 '''
    RD - PA11
