@@ -83,13 +83,13 @@ void main(void)
 		}
 		LOG_INF("CANopen stack initialized");
 
-#ifdef CONFIG_CANOPEN_STORAGE
+		#ifdef CONFIG_CANOPEN_STORAGE
 		canopen_storage_attach(CO->SDO[0], CO->em);
-#endif /* CONFIG_CANOPEN_STORAGE */
+		#endif /* CONFIG_CANOPEN_STORAGE */
 
-#if  ( CONFIG_CANOPEN_LEDS && !CONFIG_DEBUG_LED )
-        canopen_leds_init(CO->NMT, led_callback, NULL, NULL, NULL); 
-#endif /* CONFIG_CANOPEN_LEDS */
+		#if  ( CONFIG_CANOPEN_LEDS && !CONFIG_DEBUG_LED )
+    	canopen_leds_init(CO->NMT, led_callback, NULL, NULL, NULL); 
+		#endif /* CONFIG_CANOPEN_LEDS */
 
 		sensors_init();
 		adcs_init();
@@ -130,12 +130,12 @@ void main(void)
 				 */
 				elapsed = 0U;
 			}
-		}
+		} // while(true)
 
 		if (reset == CO_RESET_COMM) {
 			LOG_INF("Resetting communication");
 		}
-	}
+	} // while (reset != CO_RESET_APP) 
 
 	LOG_INF("Resetting device");
 
