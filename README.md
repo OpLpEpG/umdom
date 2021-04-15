@@ -80,11 +80,12 @@ can:
 ```
    BME280 - Zephyr sensor driver
    AM2320
-   BH1750 - 4lux resolution
+   BH1750 - 4lux resolution L
 ```   
 
 ## ADC 
-   from ACS712 measure 50Hz   
+   from ACS712 measure 50Hz 
+   multichanel scan mode, DMA, timer trigger 50ms   
 
 ## patch Zephyr OS module canopennode CO_TIME.h to use last version EDSEditor
 
