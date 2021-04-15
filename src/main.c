@@ -95,8 +95,6 @@ void main(void)
 		adcs_init();
 		gpios_init();
 
-		//  CO_OD_configure(CO->SDO[0], OD_2102_buttonPressCounter,	odf_2102, NULL, 0U, 0U);
-
 		CO->TPDO[4]->defaultCOB_ID = 0x1C0;
 		CO->TPDO[4]->CANtxBuff->ident = 0x1C0 + CONFIG_CANOPEN_NODE_ID;
 		CO->TPDO[5]->defaultCOB_ID = 0x2C0;
@@ -114,16 +112,6 @@ void main(void)
 			}
 
 			if (timeout > 0) {
-				// CO_LOCK_OD();
-				// OD_buttonPressCounter = counter;
-				// CO_UNLOCK_OD();
-                // #ifdef CONFIG_CANOPEN_STORAGE
-				// ret = canopen_storage_save(
-				// 	CANOPEN_STORAGE_EEPROM);
-				// if (ret) {
-				// 	LOG_ERR("failed to save EEPROM");
-				// }
-                // #endif /* CONFIG_CANOPEN_STORAGE */
 				/*
 				 * Try to sleep for as long as the
 				 * stack requested and calculate the
