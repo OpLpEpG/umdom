@@ -84,8 +84,8 @@ can:
 ```   
 
 ## ADC 
-   from ACS712 measure 50Hz 
-   multichanel scan mode, DMA, timer trigger 50ms   
+   from ACS712 measure 50Hz amplitude, least squares method
+   multichanel scan mode, DMA, timer trigger 50ms - 4 times per period   
 
 ## patch Zephyr OS module canopennode CO_TIME.h to use last version EDSEditor
 
