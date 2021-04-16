@@ -69,7 +69,7 @@
   #define CO_NO_LSS_SERVER               0   //LSS Slave
   #define CO_NO_LSS_CLIENT               0   //LSS Master
   #define CO_NO_RPDO                     4   //Associated objects: 14xx, 16xx
-  #define CO_NO_TPDO                     6   //Associated objects: 18xx, 1Axx
+  #define CO_NO_TPDO                     7   //Associated objects: 18xx, 1Axx
   #define CO_NO_NMT_MASTER               0
   #define CO_NO_TRACE                    0
 
@@ -77,7 +77,7 @@
 /*******************************************************************************
    OBJECT DICTIONARY
 *******************************************************************************/
-   #define CO_OD_NoOfElements             64
+   #define CO_OD_NoOfElements             67
 
 
 /*******************************************************************************
@@ -90,6 +90,11 @@
                UNSIGNED32     revisionNumber;
                UNSIGNED32     serialNumber;
                }              OD_identity_t;
+/*1026      */ typedef struct {
+               UNSIGNED8      highestSubIndexSupported;
+               UNSIGNED8      stdIn;
+               UNSIGNED8      stdOut;
+               }              OD_OSPrompt_t;
 /*1200      */ typedef struct {
                UNSIGNED8      maxSubIndex;
                UNSIGNED32     COB_IDClientToServer;
@@ -264,6 +269,13 @@
 /*1019 */
         #define OD_1019_synchronousCounterOverflowValue             0x1019
 
+/*1026 */
+        #define OD_1026_OSPrompt                                    0x1026
+
+        #define OD_1026_0_OSPrompt_maxSubIndex                      0
+        #define OD_1026_1_OSPrompt_stdIn                            1
+        #define OD_1026_2_OSPrompt_stdOut                           2
+
 /*1029 */
         #define OD_1029_errorBehavior                               0x1029
 
@@ -428,6 +440,17 @@
         #define OD_1805_5_TPDOCommunicationParameter_eventTimer     5
         #define OD_1805_6_TPDOCommunicationParameter_SYNCStartValue 6
 
+/*1806 */
+        #define OD_1806_TPDOCommunicationParameter                  0x1806
+
+        #define OD_1806_0_TPDOCommunicationParameter_maxSubIndex    0
+        #define OD_1806_1_TPDOCommunicationParameter_COB_IDUsedByTPDO 1
+        #define OD_1806_2_TPDOCommunicationParameter_transmissionType 2
+        #define OD_1806_3_TPDOCommunicationParameter_inhibitTime    3
+        #define OD_1806_4_TPDOCommunicationParameter_compatibilityEntry 4
+        #define OD_1806_5_TPDOCommunicationParameter_eventTimer     5
+        #define OD_1806_6_TPDOCommunicationParameter_SYNCStartValue 6
+
 /*1A00 */
         #define OD_1A00_TPDOMappingParameter                        0x1A00
 
@@ -505,6 +528,19 @@
         #define OD_1A05_6_TPDOMappingParameter_mappedObject6        6
         #define OD_1A05_7_TPDOMappingParameter_mappedObject7        7
         #define OD_1A05_8_TPDOMappingParameter_mappedObject8        8
+
+/*1A06 */
+        #define OD_1A06_TPDOMappingParameter                        0x1A06
+
+        #define OD_1A06_0_TPDOMappingParameter_maxSubIndex          0
+        #define OD_1A06_1_TPDOMappingParameter_mappedObject1        1
+        #define OD_1A06_2_TPDOMappingParameter_mappedObject2        2
+        #define OD_1A06_3_TPDOMappingParameter_mappedObject3        3
+        #define OD_1A06_4_TPDOMappingParameter_mappedObject4        4
+        #define OD_1A06_5_TPDOMappingParameter_mappedObject5        5
+        #define OD_1A06_6_TPDOMappingParameter_mappedObject6        6
+        #define OD_1A06_7_TPDOMappingParameter_mappedObject7        7
+        #define OD_1A06_8_TPDOMappingParameter_mappedObject8        8
 
 /*1F50 */
         #define OD_1F50_programData                                 0x1F50
@@ -717,6 +753,7 @@ struct sCO_OD_RAM{
 /*1003      */ UNSIGNED32      preDefinedErrorField[8];
 /*1010      */ UNSIGNED32      storeParameters[1];
 /*1011      */ UNSIGNED32      restoreDefaultParameters[1];
+/*1026      */ OD_OSPrompt_t   OSPrompt;
 /*1F50      */ DOMAIN          programData[1];
 /*1F51      */ UNSIGNED8       programControl[1];
 /*1F56      */ UNSIGNED32      programSoftwareIdentification[1];
@@ -758,8 +795,8 @@ struct sCO_OD_ROM{
 /*1200      */ OD_SDOServerParameter_t SDOServerParameter[1];
 /*1400      */ OD_RPDOCommunicationParameter_t RPDOCommunicationParameter[4];
 /*1600      */ OD_RPDOMappingParameter_t RPDOMappingParameter[4];
-/*1800      */ OD_TPDOCommunicationParameter_t TPDOCommunicationParameter[6];
-/*1A00      */ OD_TPDOMappingParameter_t TPDOMappingParameter[6];
+/*1800      */ OD_TPDOCommunicationParameter_t TPDOCommunicationParameter[7];
+/*1A00      */ OD_TPDOMappingParameter_t TPDOMappingParameter[7];
 /*1F80      */ UNSIGNED32     NMTStartup;
 /*2002      */ OD_configPort_t configPort[3];
 /*2005      */ OD_configADC_t  configADC;
@@ -853,6 +890,9 @@ extern struct sCO_OD_EEPROM CO_OD_EEPROM;
 
 /*1019, Data Type: UNSIGNED8 */
         #define OD_synchronousCounterOverflowValue                  CO_OD_ROM.synchronousCounterOverflowValue
+
+/*1026, Data Type: OSPrompt_t */
+        #define OD_OSPrompt                                         CO_OD_RAM.OSPrompt
 
 /*1029, Data Type: UNSIGNED8, Array[6] */
         #define OD_errorBehavior                                    CO_OD_ROM.errorBehavior

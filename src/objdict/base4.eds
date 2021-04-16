@@ -8,8 +8,8 @@ Description=
 CreationTime=2:52PM
 CreationDate=09-18-2019
 CreatedBy=
-ModificationTime=11:00AM
-ModificationDate=04-15-2021
+ModificationTime=9:43AM
+ModificationDate=04-16-2021
 ModifiedBy=
 
 [DeviceInfo]
@@ -33,7 +33,7 @@ DynamicChannelsSupported=0
 CompactPDO=0
 GroupMessaging=0
 NrOfRXPDO=4
-NrOfTXPDO=6
+NrOfTXPDO=7
 LSS_Supported=0
 
 [DummyUsage]
@@ -124,7 +124,7 @@ DefaultValue=0x00000000
 PDOMapping=0
 
 [OptionalObjects]
-SupportedObjects=48
+SupportedObjects=51
 1=0x1002
 2=0x1003
 3=0x1005
@@ -141,38 +141,41 @@ SupportedObjects=48
 14=0x1016
 15=0x1017
 16=0x1019
-17=0x1029
-18=0x1200
-19=0x1400
-20=0x1401
-21=0x1402
-22=0x1403
-23=0x1600
-24=0x1601
-25=0x1602
-26=0x1603
-27=0x1800
-28=0x1801
-29=0x1802
-30=0x1803
-31=0x1804
-32=0x1805
-33=0x1A00
-34=0x1A01
-35=0x1A02
-36=0x1A03
-37=0x1A04
-38=0x1A05
-39=0x1F50
-40=0x1F51
-41=0x1F56
-42=0x1F57
-43=0x1F80
-44=0x6100
-45=0x6300
-46=0x6400
-47=0x6401
-48=0x67FE
+17=0x1026
+18=0x1029
+19=0x1200
+20=0x1400
+21=0x1401
+22=0x1402
+23=0x1403
+24=0x1600
+25=0x1601
+26=0x1602
+27=0x1603
+28=0x1800
+29=0x1801
+30=0x1802
+31=0x1803
+32=0x1804
+33=0x1805
+34=0x1806
+35=0x1A00
+36=0x1A01
+37=0x1A02
+38=0x1A03
+39=0x1A04
+40=0x1A05
+41=0x1A06
+42=0x1F50
+43=0x1F51
+44=0x1F56
+45=0x1F57
+46=0x1F80
+47=0x6100
+48=0x6300
+49=0x6400
+50=0x6401
+51=0x67FE
 
 [1002]
 ParameterName=Manufacturer status register
@@ -467,6 +470,40 @@ DataType=0x0005
 AccessType=rw
 DefaultValue=0
 PDOMapping=0
+
+[1026]
+ParameterName=OS prompt
+ObjectType=0x9
+;StorageLocation=RAM
+SubNumber=0x3
+
+[1026sub0]
+ParameterName=Highest sub-index supported
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0005
+AccessType=ro
+DefaultValue=0x02
+PDOMapping=0
+
+[1026sub1]
+ParameterName=StdIn
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0005
+AccessType=wo
+DefaultValue=0
+PDOMapping=1
+
+[1026sub2]
+ParameterName=StdOut
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0005
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+;TPDODetectCos=1
 
 [1029]
 ParameterName=Error behavior
@@ -1464,6 +1501,75 @@ AccessType=rw
 DefaultValue=0
 PDOMapping=0
 
+[1806]
+ParameterName=TPDO communication parameter
+ObjectType=0x9
+;StorageLocation=ROM
+SubNumber=0x7
+
+[1806sub0]
+ParameterName=max sub-index
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0005
+AccessType=ro
+DefaultValue=6
+PDOMapping=0
+
+[1806sub1]
+ParameterName=COB-ID used by TPDO
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0007
+AccessType=rw
+DefaultValue=$NODEID+0x3C0
+PDOMapping=0
+
+[1806sub2]
+ParameterName=transmission type
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0005
+AccessType=rw
+DefaultValue=254
+PDOMapping=0
+
+[1806sub3]
+ParameterName=inhibit time
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1806sub4]
+ParameterName=compatibility entry
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0005
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[1806sub5]
+ParameterName=event timer
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1806sub6]
+ParameterName=SYNC start value
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
 [1A00]
 ParameterName=TPDO mapping parameter
 ObjectType=0x9
@@ -1978,6 +2084,93 @@ DefaultValue=0
 PDOMapping=0
 
 [1A05sub8]
+ParameterName=mapped object 8
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1A06]
+ParameterName=TPDO mapping parameter
+ObjectType=0x9
+;StorageLocation=ROM
+SubNumber=0x9
+
+[1A06sub0]
+ParameterName=Number of mapped objects
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+PDOMapping=0
+
+[1A06sub1]
+ParameterName=mapped object 1
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x10260208
+PDOMapping=0
+
+[1A06sub2]
+ParameterName=mapped object 2
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1A06sub3]
+ParameterName=mapped object 3
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1A06sub4]
+ParameterName=mapped object 4
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1A06sub5]
+ParameterName=mapped object 5
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1A06sub6]
+ParameterName=mapped object 6
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1A06sub7]
+ParameterName=mapped object 7
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1A06sub8]
 ParameterName=mapped object 8
 ObjectType=0x7
 ;StorageLocation=RAM

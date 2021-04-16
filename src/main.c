@@ -99,6 +99,8 @@ void main(void)
 		CO->TPDO[4]->CANtxBuff->ident = 0x1C0 + CONFIG_CANOPEN_NODE_ID;
 		CO->TPDO[5]->defaultCOB_ID = 0x2C0;
 		CO->TPDO[5]->CANtxBuff->ident = 0x2C0 + CONFIG_CANOPEN_NODE_ID;
+		CO->TPDO[6]->defaultCOB_ID = 0x3C0;
+		CO->TPDO[6]->CANtxBuff->ident = 0x3C0 + CONFIG_CANOPEN_NODE_ID;
 
 		CO_CANsetNormalMode(CO->CANmodule[0]);
 

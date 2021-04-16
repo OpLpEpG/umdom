@@ -37,6 +37,7 @@ struct sCO_OD_RAM CO_OD_RAM = {
 /*1003*/ {0x0000L, 0x0000L, 0x0000L, 0x0000L, 0x0000L, 0x0000L, 0x0000L, 0x0000L},
 /*1010*/ {0x0003L},
 /*1011*/ {0x0001L},
+/*1026*/ {0x2L, 0x0L, 0x0L},
 /*1F50*/ {0},
 /*1F51*/ {0x0L},
 /*1F56*/ {0x0000L},
@@ -92,13 +93,15 @@ struct sCO_OD_ROM CO_OD_ROM = {
 /*1802*/ {0x6L, 0x0380L, 0xFEL, 0x00, 0x0L, 0x00, 0x0L},
 /*1803*/ {0x6L, 0x0480L, 0xFEL, 0x00, 0x0L, 0x00, 0x0L},
 /*1804*/ {0x6L, 0x01C0L, 0xFEL, 0x00, 0x0L, 0x00, 0x0L},
-/*1805*/ {0x6L, 0x02C0L, 0xFEL, 0xBB8, 0x0L, 0x00, 0x0L}},
+/*1805*/ {0x6L, 0x02C0L, 0xFEL, 0xBB8, 0x0L, 0x00, 0x0L},
+/*1806*/ {0x6L, 0x03C0L, 0xFEL, 0x00, 0x0L, 0x00, 0x0L}},
 /*1A00*/ {{0x4L, 0x61000110L, 0x61000210L, 0x61000310L, 0x61000410L, 0x0000L, 0x0000L, 0x0000L, 0x0000L},
 /*1A01*/ {0x4L, 0x64010110L, 0x64010210L, 0x64010310L, 0x64010410L, 0x0000L, 0x0000L, 0x0000L, 0x0000L},
 /*1A02*/ {0x4L, 0x64010510L, 0x64010610L, 0x64010710L, 0x64010810L, 0x0000L, 0x0000L, 0x0000L, 0x0000L},
 /*1A03*/ {0x4L, 0x64010910L, 0x64010A10L, 0x64010B10L, 0x64010C10L, 0x0000L, 0x0000L, 0x0000L, 0x0000L},
 /*1A04*/ {0x8L, 0x64000108L, 0x64000208L, 0x64000308L, 0x64000408L, 0x64000508L, 0x64000608L, 0x64000708L, 0x64000808L},
-/*1A05*/ {0x6L, 0x20060310L, 0x200C0510L, 0x200A0308L, 0x200A0408L, 0x200C0308L, 0x200C0408L, 0x0000L, 0x0000L}},
+/*1A05*/ {0x6L, 0x20060310L, 0x200C0510L, 0x200A0308L, 0x200A0408L, 0x200C0308L, 0x200C0408L, 0x0000L, 0x0000L},
+/*1A06*/ {0x1L, 0x10260208L, 0x0000L, 0x0000L, 0x0000L, 0x0000L, 0x0000L, 0x0000L, 0x0000L}},
 /*1F80*/ 0x0000L,
 /*2002*/ {{0x7L, {'G', 'P', 'I', 'O', 'A'}, 0x00, 0x00, 0x00, 0x00, 0x00, 0x8100},
 /*2003*/ {0x7L, {'G', 'P', 'I', 'O', 'B'}, 0x00, 0x00, 0xF000, 0xF000, 0x00, 0xF0F8},
@@ -132,6 +135,12 @@ struct sCO_OD_EEPROM CO_OD_EEPROM = {
            {(void*)&CO_OD_ROM.identity.productCode, 0x85, 0x4 },
            {(void*)&CO_OD_ROM.identity.revisionNumber, 0x85, 0x4 },
            {(void*)&CO_OD_ROM.identity.serialNumber, 0x85, 0x4 },
+};
+
+/*0x1026*/ const CO_OD_entryRecord_t OD_record1026[3] = {
+           {(void*)&CO_OD_RAM.OSPrompt.highestSubIndexSupported, 0x06, 0x1 },
+           {(void*)&CO_OD_RAM.OSPrompt.stdIn, 0x3A, 0x1 },
+           {(void*)&CO_OD_RAM.OSPrompt.stdOut, 0x66, 0x1 },
 };
 
 /*0x1200*/ const CO_OD_entryRecord_t OD_record1200[3] = {
@@ -272,6 +281,16 @@ struct sCO_OD_EEPROM CO_OD_EEPROM = {
            {(void*)&CO_OD_ROM.TPDOCommunicationParameter[5].SYNCStartValue, 0x0D, 0x1 },
 };
 
+/*0x1806*/ const CO_OD_entryRecord_t OD_record1806[7] = {
+           {(void*)&CO_OD_ROM.TPDOCommunicationParameter[6].maxSubIndex, 0x05, 0x1 },
+           {(void*)&CO_OD_ROM.TPDOCommunicationParameter[6].COB_IDUsedByTPDO, 0x8D, 0x4 },
+           {(void*)&CO_OD_ROM.TPDOCommunicationParameter[6].transmissionType, 0x0D, 0x1 },
+           {(void*)&CO_OD_ROM.TPDOCommunicationParameter[6].inhibitTime, 0x8D, 0x2 },
+           {(void*)&CO_OD_ROM.TPDOCommunicationParameter[6].compatibilityEntry, 0x05, 0x1 },
+           {(void*)&CO_OD_ROM.TPDOCommunicationParameter[6].eventTimer, 0x8D, 0x2 },
+           {(void*)&CO_OD_ROM.TPDOCommunicationParameter[6].SYNCStartValue, 0x0D, 0x1 },
+};
+
 /*0x1A00*/ const CO_OD_entryRecord_t OD_record1A00[9] = {
            {(void*)&CO_OD_ROM.TPDOMappingParameter[0].numberOfMappedObjects, 0x0D, 0x1 },
            {(void*)&CO_OD_ROM.TPDOMappingParameter[0].mappedObject1, 0x8D, 0x4 },
@@ -342,6 +361,18 @@ struct sCO_OD_EEPROM CO_OD_EEPROM = {
            {(void*)&CO_OD_ROM.TPDOMappingParameter[5].mappedObject6, 0x8D, 0x4 },
            {(void*)&CO_OD_ROM.TPDOMappingParameter[5].mappedObject7, 0x8D, 0x4 },
            {(void*)&CO_OD_ROM.TPDOMappingParameter[5].mappedObject8, 0x8D, 0x4 },
+};
+
+/*0x1A06*/ const CO_OD_entryRecord_t OD_record1A06[9] = {
+           {(void*)&CO_OD_ROM.TPDOMappingParameter[6].numberOfMappedObjects, 0x0D, 0x1 },
+           {(void*)&CO_OD_ROM.TPDOMappingParameter[6].mappedObject1, 0x8D, 0x4 },
+           {(void*)&CO_OD_ROM.TPDOMappingParameter[6].mappedObject2, 0x8D, 0x4 },
+           {(void*)&CO_OD_ROM.TPDOMappingParameter[6].mappedObject3, 0x8D, 0x4 },
+           {(void*)&CO_OD_ROM.TPDOMappingParameter[6].mappedObject4, 0x8D, 0x4 },
+           {(void*)&CO_OD_ROM.TPDOMappingParameter[6].mappedObject5, 0x8D, 0x4 },
+           {(void*)&CO_OD_ROM.TPDOMappingParameter[6].mappedObject6, 0x8D, 0x4 },
+           {(void*)&CO_OD_ROM.TPDOMappingParameter[6].mappedObject7, 0x8D, 0x4 },
+           {(void*)&CO_OD_ROM.TPDOMappingParameter[6].mappedObject8, 0x8D, 0x4 },
 };
 
 /*0x2001*/ const CO_OD_entryRecord_t OD_record2001[3] = {
@@ -452,6 +483,7 @@ const CO_OD_entry_t CO_OD[CO_OD_NoOfElements] = {
 {0x1017, 0x00, 0x8D,  2, (void*)&CO_OD_ROM.producerHeartbeatTime},
 {0x1018, 0x04, 0x00,  0, (void*)&OD_record1018},
 {0x1019, 0x00, 0x0D,  1, (void*)&CO_OD_ROM.synchronousCounterOverflowValue},
+{0x1026, 0x02, 0x00,  0, (void*)&OD_record1026},
 {0x1029, 0x06, 0x0D,  1, (void*)&CO_OD_ROM.errorBehavior[0]},
 {0x1200, 0x02, 0x00,  0, (void*)&OD_record1200},
 {0x1400, 0x02, 0x00,  0, (void*)&OD_record1400},
@@ -468,12 +500,14 @@ const CO_OD_entry_t CO_OD[CO_OD_NoOfElements] = {
 {0x1803, 0x06, 0x00,  0, (void*)&OD_record1803},
 {0x1804, 0x06, 0x00,  0, (void*)&OD_record1804},
 {0x1805, 0x06, 0x00,  0, (void*)&OD_record1805},
+{0x1806, 0x06, 0x00,  0, (void*)&OD_record1806},
 {0x1A00, 0x08, 0x00,  0, (void*)&OD_record1A00},
 {0x1A01, 0x08, 0x00,  0, (void*)&OD_record1A01},
 {0x1A02, 0x08, 0x00,  0, (void*)&OD_record1A02},
 {0x1A03, 0x08, 0x00,  0, (void*)&OD_record1A03},
 {0x1A04, 0x08, 0x00,  0, (void*)&OD_record1A04},
 {0x1A05, 0x08, 0x00,  0, (void*)&OD_record1A05},
+{0x1A06, 0x08, 0x00,  0, (void*)&OD_record1A06},
 {0x1F50, 0x01, 0x0A,  0, (void*)0},
 {0x1F51, 0x01, 0x0E,  1, (void*)&CO_OD_RAM.programControl[0]},
 {0x1F56, 0x01, 0x86,  4, (void*)&CO_OD_RAM.programSoftwareIdentification[0]},
