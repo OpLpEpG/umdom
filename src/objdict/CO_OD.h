@@ -77,7 +77,7 @@
 /*******************************************************************************
    OBJECT DICTIONARY
 *******************************************************************************/
-   #define CO_OD_NoOfElements             67
+   #define CO_OD_NoOfElements             68
 
 
 /*******************************************************************************
@@ -177,6 +177,14 @@
                INTEGER8       humid;
                INTEGER16      press;
                }              OD_BME280_t;
+/*2080      */ typedef struct {
+               UNSIGNED8      highestSubIndexSupported;
+               UNSIGNED16     inputMask;
+               UNSIGNED16     outputMask;
+               UNSIGNED16     state;
+               UNSIGNED16     set;
+               UNSIGNED16     reset;
+               }              OD_GPIOPack_t;
 
 /*******************************************************************************
    TYPE DEFINITIONS FOR OBJECT DICTIONARY INDEXES
@@ -667,6 +675,16 @@
         #define OD_200F_4_BME280_humid                              4
         #define OD_200F_5_BME280_press                              5
 
+/*2080 */
+        #define OD_2080_GPIOPack                                    0x2080
+
+        #define OD_2080_0_GPIOPack_maxSubIndex                      0
+        #define OD_2080_1_GPIOPack_inputMask                        1
+        #define OD_2080_2_GPIOPack_outputMask                       2
+        #define OD_2080_3_GPIOPack_state                            3
+        #define OD_2080_4_GPIOPack_set                              4
+        #define OD_2080_5_GPIOPack_reset                            5
+
 /*2100 */
         #define OD_2100_errorStatusBits                             0x2100
 
@@ -763,6 +781,7 @@ struct sCO_OD_RAM{
 /*2006      */ OD_BH1750_t     BH1750[2];
 /*200A      */ OD_AM2320_t     AM2320;
 /*200C      */ OD_BME280_t     BME280[2];
+/*2080      */ OD_GPIOPack_t   GPIOPack;
 /*2100      */ OCTET_STRING   errorStatusBits[10];
 /*6100      */ UNSIGNED16      readInput16Bit[4];
 /*6300      */ UNSIGNED16      writeOutput16Bit[4];
@@ -962,6 +981,9 @@ extern struct sCO_OD_EEPROM CO_OD_EEPROM;
 
 /*200C, Data Type: BME280_t */
         #define OD_BME280                                           CO_OD_RAM.BME280
+
+/*2080, Data Type: GPIOPack_t */
+        #define OD_GPIOPack                                         CO_OD_RAM.GPIOPack
 
 /*2100, Data Type: OCTET_STRING */
         #define OD_errorStatusBits                                  CO_OD_RAM.errorStatusBits

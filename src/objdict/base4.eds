@@ -8,8 +8,8 @@ Description=
 CreationTime=2:52PM
 CreationDate=09-18-2019
 CreatedBy=
-ModificationTime=9:43AM
-ModificationDate=04-16-2021
+ModificationTime=2:49PM
+ModificationDate=05-11-2021
 ModifiedBy=
 
 [DeviceInfo]
@@ -751,7 +751,7 @@ ObjectType=0x7
 ;StorageLocation=RAM
 DataType=0x0005
 AccessType=rw
-DefaultValue=4
+DefaultValue=2
 PDOMapping=0
 
 [1600sub1]
@@ -760,7 +760,7 @@ ObjectType=0x7
 ;StorageLocation=RAM
 DataType=0x0007
 AccessType=rw
-DefaultValue=0x63000110
+DefaultValue=0x20800410
 PDOMapping=0
 
 [1600sub2]
@@ -769,7 +769,7 @@ ObjectType=0x7
 ;StorageLocation=RAM
 DataType=0x0007
 AccessType=rw
-DefaultValue=0x63000210
+DefaultValue=0x20800510
 PDOMapping=0
 
 [1600sub3]
@@ -1582,7 +1582,7 @@ ObjectType=0x7
 ;StorageLocation=RAM
 DataType=0x0005
 AccessType=rw
-DefaultValue=4
+DefaultValue=1
 PDOMapping=0
 
 [1A00sub1]
@@ -1591,7 +1591,7 @@ ObjectType=0x7
 ;StorageLocation=RAM
 DataType=0x0007
 AccessType=rw
-DefaultValue=0x61000110
+DefaultValue=0x20800310
 PDOMapping=0
 
 [1A00sub2]
@@ -1843,7 +1843,7 @@ ObjectType=0x7
 ;StorageLocation=RAM
 DataType=0x0005
 AccessType=rw
-DefaultValue=4
+DefaultValue=0
 PDOMapping=0
 
 [1A03sub1]
@@ -1930,7 +1930,7 @@ ObjectType=0x7
 ;StorageLocation=RAM
 DataType=0x0005
 AccessType=rw
-DefaultValue=8
+DefaultValue=0
 PDOMapping=0
 
 [1A04sub1]
@@ -2112,7 +2112,7 @@ ParameterName=mapped object 1
 ObjectType=0x7
 ;StorageLocation=RAM
 DataType=0x0007
-AccessType=rw
+AccessType=ro
 DefaultValue=0x10260208
 PDOMapping=0
 
@@ -2748,7 +2748,7 @@ DefaultValue=0
 PDOMapping=0
 
 [ManufacturerObjects]
-SupportedObjects=13
+SupportedObjects=14
 1=0x2000
 2=0x2001
 3=0x2002
@@ -2760,8 +2760,9 @@ SupportedObjects=13
 9=0x200A
 10=0x200C
 11=0x200F
-12=0x2100
-13=0x2101
+12=0x2080
+13=0x2100
+14=0x2101
 
 [2000]
 ParameterName=IO Configuration
@@ -3336,6 +3337,67 @@ AccessType=ro
 DefaultValue=0x8000
 PDOMapping=1
 ;TPDODetectCos=1
+
+[2080]
+ParameterName=GPIO pack
+ObjectType=0x9
+;StorageLocation=RAM
+SubNumber=0x6
+
+[2080sub0]
+ParameterName=Highest sub-index supported
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0005
+AccessType=ro
+DefaultValue=0x05
+PDOMapping=0
+
+[2080sub1]
+ParameterName=Input Mask
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0006
+AccessType=ro
+DefaultValue=
+PDOMapping=0
+
+[2080sub2]
+ParameterName=Output Mask
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0006
+AccessType=ro
+DefaultValue=
+PDOMapping=0
+
+[2080sub3]
+ParameterName=State
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0006
+AccessType=ro
+DefaultValue=
+PDOMapping=1
+;TPDODetectCos=1
+
+[2080sub4]
+ParameterName=Set
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0006
+AccessType=wo
+DefaultValue=
+PDOMapping=1
+
+[2080sub5]
+ParameterName=Reset
+ObjectType=0x7
+;StorageLocation=RAM
+DataType=0x0006
+AccessType=wo
+DefaultValue=
+PDOMapping=1
 
 [2100]
 ParameterName=Error status bits
