@@ -120,3 +120,11 @@ typedef struct{
 ..........
 
 ```
+
+## Pack GPIOs read index 0x2080 set index 0x2081 reset index 0x2082 
+```
+10000001 00000000    PA15 PA8
+11110000 11111000    PB5-3v only
+11000000 00000000    PC15-3v PC14-3v
+BBBBAACC BBBBB000 - pack gpios
+```
