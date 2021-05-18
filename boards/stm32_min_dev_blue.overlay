@@ -3,7 +3,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-
+ #include <arm/st/f1/stm32f103XB.dtsi>
+//  #include <../boards/arm/stm32_min_dev/stm32_min_dev.dtsi>
 / {
 	chosen {
 		zephyr,can-primary = &can1;
@@ -24,6 +25,25 @@
 		red-led = &led;
 		sw0 = &key;
 	};
+};
+
+&clk_hse {
+	clock-frequency = <DT_FREQ_M(8)>;
+	status = "okay";
+};
+
+&pll {
+	mul = <9>;
+	clocks = <&clk_hse>;
+	status = "okay";
+};
+
+&rcc {
+	clocks = <&pll>;
+	clock-frequency = <DT_FREQ_M(72)>;
+	ahb-prescaler = <1>;
+	apb1-prescaler = <2>;
+	apb2-prescaler = <1>;
 };
 
 &usb {
