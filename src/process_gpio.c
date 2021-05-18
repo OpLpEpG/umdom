@@ -46,6 +46,39 @@ static struct gpio_conf gpios[] = {
     },
 };
 
+// 10000001 00000000    PA15 PA8
+// 11110000 11111000    PB5-3v only
+// 11000000 00000000    PC15-3v PC14-3v
+// BBBBAACC BBBBB000 - pack gpios
+static uint16_t abc_to_pack(uint16_t a,uint16_t b, uint16_t c)
+{
+    return (b & 0xF0F8) | ((c>>6) & 0x0300) | ((a<<2) & 0x0400) | ((a>>4) & 0x0800);
+}
+static void pack_to_abc(uint16_t pack, uint16_t* a,uint16_t* b, uint16_t* c)
+{
+    *b = pack & 0xF0F8;
+    *c = (pack & 0x0300) << 6;
+    *a = ((pack>>2) & 0x0100) | ((pack<<4) & 0x8000);
+}
+static inline void update_pack_iomask(void)
+{
+    uint16_t ma = gpios[0].od_conf->inputMask;
+    uint16_t mb = gpios[1].od_conf->inputMask;
+    uint16_t mc = gpios[2].od_conf->inputMask;
+    OD_GPIOPack.inputMask = abc_to_pack(ma,mb,mc);
+    ma = gpios[0].od_conf->outputMask;
+    mb = gpios[1].od_conf->outputMask;
+    mc = gpios[2].od_conf->outputMask;
+    OD_GPIOPack.outputMask = abc_to_pack(ma,mb,mc);
+}
+
+static inline void update_pack_State(void)
+{
+    uint16_t a = *gpios[0].od_inp;
+    uint16_t b = *gpios[1].od_inp;
+    uint16_t c = *gpios[2].od_inp;
+    OD_GPIOPack.state = abc_to_pack(a,b,c);
+}
 
 static void gpio_input_isr_callback(const struct device *port,
 				struct gpio_callback *cb,
@@ -61,10 +94,13 @@ static void gpio_input_work(struct k_work *item)
     gpio_port_value_t v;
     gpio_port_get_raw(conf->dev, &v);
     CO_LOCK_OD();
-    *conf->od_inp = conf->od_conf->inputMask & v;
+    *conf->od_inp = (conf->od_conf->inputMask | conf->od_conf->outputMask) & v; // all input and output physical pin state
     CO_UNLOCK_OD();
+    update_pack_State();
+    LOG_INF("Update input");
 }    
 
+static bool FlagUpdateODF;
 
 static CO_SDO_abortCode_t odf_setup(CO_ODF_arg_t *odf_arg)
 {
@@ -106,6 +142,7 @@ static CO_SDO_abortCode_t odf_setup(CO_ODF_arg_t *odf_arg)
         break;
         default: return CO_SDO_AB_READONLY;
     }
+    FlagUpdateODF = true;
     return CO_SDO_AB_NONE;
 }
 
@@ -168,8 +205,11 @@ void gpios_init(void)
 
         CO_OD_configure(CO->SDO[0], p->index, odf_setup, p, 0U, 0U);
 
+       	k_work_submit(&p->work);
+
         p++;
-    }    
+    }
+    update_pack_iomask();    
 }
 
 // static inline int check_out(const OD_configPort_t* conf, uint16_t out)
@@ -214,6 +254,41 @@ void gpios_process(uint16_t timeDifference_ms)
                 }
             }
             cf++;
+        }
+
+        if (FlagUpdateODF)
+        {
+            FlagUpdateODF = false;
+
+            update_pack_iomask();
+        }
+        if (OD_GPIOPack.set)
+        {
+            uint16_t a,b,c;
+
+            pack_to_abc(OD_GPIOPack.set, &a, &b, &c);
+
+            if (a) gpio_port_set_bits_raw(gpios[0].dev, a);
+            if (b) gpio_port_set_bits_raw(gpios[1].dev, a);
+            if (c) gpio_port_set_bits_raw(gpios[2].dev, a);
+
+            CO_LOCK_OD();
+            OD_GPIOPack.set = 0;
+            CO_UNLOCK_OD();
+        }
+        if (OD_GPIOPack.reset)
+        {
+            uint16_t a,b,c;
+
+            pack_to_abc(OD_GPIOPack.reset, &a, &b, &c);
+
+            if (a) gpio_port_clear_bits_raw(gpios[0].dev, a);
+            if (b) gpio_port_clear_bits_raw(gpios[1].dev, a);
+            if (c) gpio_port_clear_bits_raw(gpios[2].dev, a);
+
+            CO_LOCK_OD();
+            OD_GPIOPack.reset = 0;
+            CO_UNLOCK_OD();
         }
     }
     

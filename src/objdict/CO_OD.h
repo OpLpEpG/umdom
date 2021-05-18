@@ -766,23 +766,47 @@
 struct sCO_OD_RAM{
                UNSIGNED32     FirstWord;
 
+/*1000      */ UNSIGNED32     deviceType;
 /*1001      */ UNSIGNED8      errorRegister;
 /*1002      */ UNSIGNED32     manufacturerStatusRegister;
 /*1003      */ UNSIGNED32      preDefinedErrorField[8];
+/*1005      */ UNSIGNED32     COB_ID_SYNCMessage;
+/*1006      */ UNSIGNED32     communicationCyclePeriod;
+/*1007      */ UNSIGNED32     synchronousWindowLength;
+/*1008      */ VISIBLE_STRING manufacturerDeviceName[23];
+/*1009      */ VISIBLE_STRING manufacturerHardwareVersion[4];
+/*100A      */ VISIBLE_STRING manufacturerSoftwareVersion[4];
 /*1010      */ UNSIGNED32      storeParameters[1];
 /*1011      */ UNSIGNED32      restoreDefaultParameters[1];
+/*1012      */ UNSIGNED32     COB_ID_TIME;
+/*1014      */ UNSIGNED32     COB_ID_EMCY;
+/*1015      */ UNSIGNED16     inhibitTimeEMCY;
+/*1016      */ UNSIGNED32      consumerHeartbeatTime[4];
+/*1017      */ UNSIGNED16     producerHeartbeatTime;
+/*1018      */ OD_identity_t   identity;
+/*1019      */ UNSIGNED8      synchronousCounterOverflowValue;
 /*1026      */ OD_OSPrompt_t   OSPrompt;
+/*1029      */ UNSIGNED8       errorBehavior[6];
+/*1200      */ OD_SDOServerParameter_t SDOServerParameter[1];
+/*1400      */ OD_RPDOCommunicationParameter_t RPDOCommunicationParameter[4];
+/*1600      */ OD_RPDOMappingParameter_t RPDOMappingParameter[4];
+/*1800      */ OD_TPDOCommunicationParameter_t TPDOCommunicationParameter[7];
+/*1A00      */ OD_TPDOMappingParameter_t TPDOMappingParameter[7];
 /*1F50      */ DOMAIN          programData[1];
 /*1F51      */ UNSIGNED8       programControl[1];
 /*1F56      */ UNSIGNED32      programSoftwareIdentification[1];
 /*1F57      */ UNSIGNED32      flashStatusIdentification[1];
+/*1F80      */ UNSIGNED32     NMTStartup;
 /*2000      */ UNSIGNED8      IO_Configuration;
 /*2001      */ OD_NMT_BootNetwork_t NMT_BootNetwork;
+/*2002      */ OD_configPort_t configPort[3];
+/*2005      */ OD_configADC_t  configADC;
 /*2006      */ OD_BH1750_t     BH1750[2];
 /*200A      */ OD_AM2320_t     AM2320;
 /*200C      */ OD_BME280_t     BME280[2];
 /*2080      */ OD_GPIOPack_t   GPIOPack;
 /*2100      */ OCTET_STRING   errorStatusBits[10];
+/*2101      */ UNSIGNED32     powerOnCounter;
 /*6100      */ UNSIGNED16      readInput16Bit[4];
 /*6300      */ UNSIGNED16      writeOutput16Bit[4];
 /*6400      */ INTEGER8        readAnalogueInput8Bit[16];
@@ -796,29 +820,6 @@ struct sCO_OD_RAM{
 struct sCO_OD_ROM{
                UNSIGNED32     FirstWord;
 
-/*1000      */ UNSIGNED32     deviceType;
-/*1005      */ UNSIGNED32     COB_ID_SYNCMessage;
-/*1006      */ UNSIGNED32     communicationCyclePeriod;
-/*1007      */ UNSIGNED32     synchronousWindowLength;
-/*1008      */ VISIBLE_STRING manufacturerDeviceName[23];
-/*1009      */ VISIBLE_STRING manufacturerHardwareVersion[4];
-/*100A      */ VISIBLE_STRING manufacturerSoftwareVersion[4];
-/*1012      */ UNSIGNED32     COB_ID_TIME;
-/*1014      */ UNSIGNED32     COB_ID_EMCY;
-/*1015      */ UNSIGNED16     inhibitTimeEMCY;
-/*1016      */ UNSIGNED32      consumerHeartbeatTime[4];
-/*1017      */ UNSIGNED16     producerHeartbeatTime;
-/*1018      */ OD_identity_t   identity;
-/*1019      */ UNSIGNED8      synchronousCounterOverflowValue;
-/*1029      */ UNSIGNED8       errorBehavior[6];
-/*1200      */ OD_SDOServerParameter_t SDOServerParameter[1];
-/*1400      */ OD_RPDOCommunicationParameter_t RPDOCommunicationParameter[4];
-/*1600      */ OD_RPDOMappingParameter_t RPDOMappingParameter[4];
-/*1800      */ OD_TPDOCommunicationParameter_t TPDOCommunicationParameter[7];
-/*1A00      */ OD_TPDOMappingParameter_t TPDOMappingParameter[7];
-/*1F80      */ UNSIGNED32     NMTStartup;
-/*2002      */ OD_configPort_t configPort[3];
-/*2005      */ OD_configADC_t  configADC;
 
                UNSIGNED32     LastWord;
 };
@@ -827,7 +828,6 @@ struct sCO_OD_ROM{
 struct sCO_OD_EEPROM{
                UNSIGNED32     FirstWord;
 
-/*2101      */ UNSIGNED32     powerOnCounter;
 
                UNSIGNED32     LastWord;
 };
@@ -843,7 +843,7 @@ extern struct sCO_OD_EEPROM CO_OD_EEPROM;
    ALIASES FOR OBJECT DICTIONARY VARIABLES
 *******************************************************************************/
 /*1000, Data Type: UNSIGNED32 */
-        #define OD_deviceType                                       CO_OD_ROM.deviceType
+        #define OD_deviceType                                       CO_OD_RAM.deviceType
 
 /*1001, Data Type: UNSIGNED8 */
         #define OD_errorRegister                                    CO_OD_RAM.errorRegister
@@ -857,24 +857,24 @@ extern struct sCO_OD_EEPROM CO_OD_EEPROM;
         #define ODA_preDefinedErrorField_standardErrorField         0
 
 /*1005, Data Type: UNSIGNED32 */
-        #define OD_COB_ID_SYNCMessage                               CO_OD_ROM.COB_ID_SYNCMessage
+        #define OD_COB_ID_SYNCMessage                               CO_OD_RAM.COB_ID_SYNCMessage
 
 /*1006, Data Type: UNSIGNED32 */
-        #define OD_communicationCyclePeriod                         CO_OD_ROM.communicationCyclePeriod
+        #define OD_communicationCyclePeriod                         CO_OD_RAM.communicationCyclePeriod
 
 /*1007, Data Type: UNSIGNED32 */
-        #define OD_synchronousWindowLength                          CO_OD_ROM.synchronousWindowLength
+        #define OD_synchronousWindowLength                          CO_OD_RAM.synchronousWindowLength
 
 /*1008, Data Type: VISIBLE_STRING */
-        #define OD_manufacturerDeviceName                           CO_OD_ROM.manufacturerDeviceName
+        #define OD_manufacturerDeviceName                           CO_OD_RAM.manufacturerDeviceName
         #define ODL_manufacturerDeviceName_stringLength             23
 
 /*1009, Data Type: VISIBLE_STRING */
-        #define OD_manufacturerHardwareVersion                      CO_OD_ROM.manufacturerHardwareVersion
+        #define OD_manufacturerHardwareVersion                      CO_OD_RAM.manufacturerHardwareVersion
         #define ODL_manufacturerHardwareVersion_stringLength        4
 
 /*100A, Data Type: VISIBLE_STRING */
-        #define OD_manufacturerSoftwareVersion                      CO_OD_ROM.manufacturerSoftwareVersion
+        #define OD_manufacturerSoftwareVersion                      CO_OD_RAM.manufacturerSoftwareVersion
         #define ODL_manufacturerSoftwareVersion_stringLength        4
 
 /*1010, Data Type: UNSIGNED32, Array[1] */
@@ -888,33 +888,33 @@ extern struct sCO_OD_EEPROM CO_OD_EEPROM;
         #define ODA_restoreDefaultParameters_restoreAllDefaultParameters 0
 
 /*1012, Data Type: UNSIGNED32 */
-        #define OD_COB_ID_TIME                                      CO_OD_ROM.COB_ID_TIME
+        #define OD_COB_ID_TIME                                      CO_OD_RAM.COB_ID_TIME
 
 /*1014, Data Type: UNSIGNED32 */
-        #define OD_COB_ID_EMCY                                      CO_OD_ROM.COB_ID_EMCY
+        #define OD_COB_ID_EMCY                                      CO_OD_RAM.COB_ID_EMCY
 
 /*1015, Data Type: UNSIGNED16 */
-        #define OD_inhibitTimeEMCY                                  CO_OD_ROM.inhibitTimeEMCY
+        #define OD_inhibitTimeEMCY                                  CO_OD_RAM.inhibitTimeEMCY
 
 /*1016, Data Type: UNSIGNED32, Array[4] */
-        #define OD_consumerHeartbeatTime                            CO_OD_ROM.consumerHeartbeatTime
+        #define OD_consumerHeartbeatTime                            CO_OD_RAM.consumerHeartbeatTime
         #define ODL_consumerHeartbeatTime_arrayLength               4
         #define ODA_consumerHeartbeatTime_consumerHeartbeatTime     0
 
 /*1017, Data Type: UNSIGNED16 */
-        #define OD_producerHeartbeatTime                            CO_OD_ROM.producerHeartbeatTime
+        #define OD_producerHeartbeatTime                            CO_OD_RAM.producerHeartbeatTime
 
 /*1018, Data Type: identity_t */
-        #define OD_identity                                         CO_OD_ROM.identity
+        #define OD_identity                                         CO_OD_RAM.identity
 
 /*1019, Data Type: UNSIGNED8 */
-        #define OD_synchronousCounterOverflowValue                  CO_OD_ROM.synchronousCounterOverflowValue
+        #define OD_synchronousCounterOverflowValue                  CO_OD_RAM.synchronousCounterOverflowValue
 
 /*1026, Data Type: OSPrompt_t */
         #define OD_OSPrompt                                         CO_OD_RAM.OSPrompt
 
 /*1029, Data Type: UNSIGNED8, Array[6] */
-        #define OD_errorBehavior                                    CO_OD_ROM.errorBehavior
+        #define OD_errorBehavior                                    CO_OD_RAM.errorBehavior
         #define ODL_errorBehavior_arrayLength                       6
         #define ODA_errorBehavior_communication                     0
         #define ODA_errorBehavior_communicationOther                1
@@ -924,19 +924,19 @@ extern struct sCO_OD_EEPROM CO_OD_EEPROM;
         #define ODA_errorBehavior_manufacturerSpecific              5
 
 /*1200, Data Type: SDOServerParameter_t */
-        #define OD_SDOServerParameter                               CO_OD_ROM.SDOServerParameter
+        #define OD_SDOServerParameter                               CO_OD_RAM.SDOServerParameter
 
 /*1400, Data Type: RPDOCommunicationParameter_t */
-        #define OD_RPDOCommunicationParameter                       CO_OD_ROM.RPDOCommunicationParameter
+        #define OD_RPDOCommunicationParameter                       CO_OD_RAM.RPDOCommunicationParameter
 
 /*1600, Data Type: RPDOMappingParameter_t */
-        #define OD_RPDOMappingParameter                             CO_OD_ROM.RPDOMappingParameter
+        #define OD_RPDOMappingParameter                             CO_OD_RAM.RPDOMappingParameter
 
 /*1800, Data Type: TPDOCommunicationParameter_t */
-        #define OD_TPDOCommunicationParameter                       CO_OD_ROM.TPDOCommunicationParameter
+        #define OD_TPDOCommunicationParameter                       CO_OD_RAM.TPDOCommunicationParameter
 
 /*1A00, Data Type: TPDOMappingParameter_t */
-        #define OD_TPDOMappingParameter                             CO_OD_ROM.TPDOMappingParameter
+        #define OD_TPDOMappingParameter                             CO_OD_RAM.TPDOMappingParameter
 
 /*1F50, Data Type: DOMAIN, Array[1] */
         #define OD_programData                                      CO_OD_RAM.programData
@@ -959,7 +959,7 @@ extern struct sCO_OD_EEPROM CO_OD_EEPROM;
         #define ODA_flashStatusIdentification_                      0
 
 /*1F80, Data Type: UNSIGNED32 */
-        #define OD_NMTStartup                                       CO_OD_ROM.NMTStartup
+        #define OD_NMTStartup                                       CO_OD_RAM.NMTStartup
 
 /*2000, Data Type: UNSIGNED8 */
         #define OD_IO_Configuration                                 CO_OD_RAM.IO_Configuration
@@ -968,10 +968,10 @@ extern struct sCO_OD_EEPROM CO_OD_EEPROM;
         #define OD_NMT_BootNetwork                                  CO_OD_RAM.NMT_BootNetwork
 
 /*2002, Data Type: configPort_t */
-        #define OD_configPort                                       CO_OD_ROM.configPort
+        #define OD_configPort                                       CO_OD_RAM.configPort
 
 /*2005, Data Type: configADC_t */
-        #define OD_configADC                                        CO_OD_ROM.configADC
+        #define OD_configADC                                        CO_OD_RAM.configADC
 
 /*2006, Data Type: BH1750_t */
         #define OD_BH1750                                           CO_OD_RAM.BH1750
@@ -990,7 +990,7 @@ extern struct sCO_OD_EEPROM CO_OD_EEPROM;
         #define ODL_errorStatusBits_stringLength                    10
 
 /*2101, Data Type: UNSIGNED32 */
-        #define OD_powerOnCounter                                   CO_OD_EEPROM.powerOnCounter
+        #define OD_powerOnCounter                                   CO_OD_RAM.powerOnCounter
 
 /*6100, Data Type: UNSIGNED16, Array[4] */
         #define OD_readInput16Bit                                   CO_OD_RAM.readInput16Bit

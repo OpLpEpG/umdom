@@ -8,8 +8,8 @@ Description=
 CreationTime=2:52PM
 CreationDate=09-18-2019
 CreatedBy=
-ModificationTime=2:49PM
-ModificationDate=05-11-2021
+ModificationTime=10:26AM
+ModificationDate=05-18-2021
 ModifiedBy=
 
 [DeviceInfo]
@@ -57,7 +57,7 @@ SupportedObjects=3
 [1000]
 ParameterName=Device type
 ObjectType=0x7
-;StorageLocation=ROM
+;StorageLocation=RAM
 DataType=0x0007
 AccessType=ro
 DefaultValue=0x00000000
@@ -75,7 +75,7 @@ PDOMapping=1
 [1018]
 ParameterName=Identity
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x5
 
 [1018sub0]
@@ -276,7 +276,7 @@ PDOMapping=0
 [1005]
 ParameterName=COB-ID SYNC message
 ObjectType=0x7
-;StorageLocation=ROM
+;StorageLocation=RAM
 DataType=0x0007
 AccessType=rw
 DefaultValue=0x00000080
@@ -285,7 +285,7 @@ PDOMapping=0
 [1006]
 ParameterName=Communication cycle period
 ObjectType=0x7
-;StorageLocation=ROM
+;StorageLocation=RAM
 DataType=0x0007
 AccessType=rw
 DefaultValue=0
@@ -294,7 +294,7 @@ PDOMapping=0
 [1007]
 ParameterName=Synchronous window length
 ObjectType=0x7
-;StorageLocation=ROM
+;StorageLocation=RAM
 DataType=0x0007
 AccessType=rw
 DefaultValue=0
@@ -303,7 +303,7 @@ PDOMapping=0
 [1008]
 ParameterName=Manufacturer device name
 ObjectType=0x7
-;StorageLocation=ROM
+;StorageLocation=RAM
 DataType=0x0009
 AccessType=const
 DefaultValue=Zephyr RTOS/CANopenNode
@@ -312,7 +312,7 @@ PDOMapping=0
 [1009]
 ParameterName=Manufacturer hardware version
 ObjectType=0x7
-;StorageLocation=ROM
+;StorageLocation=RAM
 DataType=0x0009
 AccessType=const
 DefaultValue=3.00
@@ -321,7 +321,7 @@ PDOMapping=0
 [100A]
 ParameterName=Manufacturer software version
 ObjectType=0x7
-;StorageLocation=ROM
+;StorageLocation=RAM
 DataType=0x0009
 AccessType=const
 DefaultValue=3.00
@@ -378,7 +378,7 @@ PDOMapping=0
 [1012]
 ParameterName=COB-ID TIME
 ObjectType=0x7
-;StorageLocation=ROM
+;StorageLocation=RAM
 DataType=0x0007
 AccessType=ro
 DefaultValue=0x80000100
@@ -387,7 +387,7 @@ PDOMapping=0
 [1014]
 ParameterName=COB-ID EMCY
 ObjectType=0x7
-;StorageLocation=ROM
+;StorageLocation=RAM
 DataType=0x0007
 AccessType=ro
 DefaultValue=$NODEID+0x80
@@ -396,7 +396,7 @@ PDOMapping=0
 [1015]
 ParameterName=inhibit time EMCY
 ObjectType=0x7
-;StorageLocation=ROM
+;StorageLocation=RAM
 DataType=0x0006
 AccessType=rw
 DefaultValue=100
@@ -405,7 +405,7 @@ PDOMapping=0
 [1016]
 ParameterName=Consumer heartbeat time
 ObjectType=0x8
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x5
 
 [1016sub0]
@@ -456,7 +456,7 @@ PDOMapping=0
 [1017]
 ParameterName=Producer heartbeat time
 ObjectType=0x7
-;StorageLocation=ROM
+;StorageLocation=RAM
 DataType=0x0006
 AccessType=rw
 DefaultValue=1000
@@ -465,7 +465,7 @@ PDOMapping=0
 [1019]
 ParameterName=Synchronous counter overflow value
 ObjectType=0x7
-;StorageLocation=ROM
+;StorageLocation=RAM
 DataType=0x0005
 AccessType=rw
 DefaultValue=0
@@ -503,12 +503,11 @@ DataType=0x0005
 AccessType=ro
 DefaultValue=0
 PDOMapping=1
-;TPDODetectCos=1
 
 [1029]
 ParameterName=Error behavior
 ObjectType=0x8
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x7
 
 [1029sub0]
@@ -577,7 +576,7 @@ PDOMapping=0
 [1200]
 ParameterName=SDO server parameter
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x3
 
 [1200sub0]
@@ -610,7 +609,7 @@ PDOMapping=0
 [1400]
 ParameterName=RPDO communication parameter
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x3
 
 [1400sub0]
@@ -643,7 +642,7 @@ PDOMapping=0
 [1401]
 ParameterName=RPDO communication parameter
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x3
 
 [1401sub0]
@@ -676,7 +675,7 @@ PDOMapping=0
 [1402]
 ParameterName=RPDO communication parameter
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x3
 
 [1402sub0]
@@ -709,7 +708,7 @@ PDOMapping=0
 [1403]
 ParameterName=RPDO communication parameter
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x3
 
 [1403sub0]
@@ -742,7 +741,7 @@ PDOMapping=0
 [1600]
 ParameterName=RPDO mapping parameter
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x9
 
 [1600sub0]
@@ -829,7 +828,7 @@ PDOMapping=0
 [1601]
 ParameterName=RPDO mapping parameter
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x9
 
 [1601sub0]
@@ -916,7 +915,7 @@ PDOMapping=0
 [1602]
 ParameterName=RPDO mapping parameter
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x9
 
 [1602sub0]
@@ -1003,7 +1002,7 @@ PDOMapping=0
 [1603]
 ParameterName=RPDO mapping parameter
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x9
 
 [1603sub0]
@@ -1090,7 +1089,7 @@ PDOMapping=0
 [1800]
 ParameterName=TPDO communication parameter
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x7
 
 [1800sub0]
@@ -1159,7 +1158,7 @@ PDOMapping=0
 [1801]
 ParameterName=TPDO communication parameter
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x7
 
 [1801sub0]
@@ -1228,7 +1227,7 @@ PDOMapping=0
 [1802]
 ParameterName=TPDO communication parameter
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x7
 
 [1802sub0]
@@ -1297,7 +1296,7 @@ PDOMapping=0
 [1803]
 ParameterName=TPDO communication parameter
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x7
 
 [1803sub0]
@@ -1366,7 +1365,7 @@ PDOMapping=0
 [1804]
 ParameterName=TPDO communication parameter
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x7
 
 [1804sub0]
@@ -1435,7 +1434,7 @@ PDOMapping=0
 [1805]
 ParameterName=TPDO communication parameter
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x7
 
 [1805sub0]
@@ -1504,7 +1503,7 @@ PDOMapping=0
 [1806]
 ParameterName=TPDO communication parameter
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x7
 
 [1806sub0]
@@ -1573,7 +1572,7 @@ PDOMapping=0
 [1A00]
 ParameterName=TPDO mapping parameter
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x9
 
 [1A00sub0]
@@ -1660,7 +1659,7 @@ PDOMapping=0
 [1A01]
 ParameterName=TPDO mapping parameter
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x9
 
 [1A01sub0]
@@ -1747,7 +1746,7 @@ PDOMapping=0
 [1A02]
 ParameterName=TPDO mapping parameter
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x9
 
 [1A02sub0]
@@ -1834,7 +1833,7 @@ PDOMapping=0
 [1A03]
 ParameterName=TPDO mapping parameter
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x9
 
 [1A03sub0]
@@ -1921,7 +1920,7 @@ PDOMapping=0
 [1A04]
 ParameterName=TPDO mapping parameter
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x9
 
 [1A04sub0]
@@ -2008,7 +2007,7 @@ PDOMapping=0
 [1A05]
 ParameterName=TPDO mapping parameter
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x9
 
 [1A05sub0]
@@ -2035,7 +2034,7 @@ ObjectType=0x7
 ;StorageLocation=RAM
 DataType=0x0007
 AccessType=rw
-DefaultValue=0x200C0510
+DefaultValue=0x200A0408
 PDOMapping=0
 
 [1A05sub3]
@@ -2053,7 +2052,7 @@ ObjectType=0x7
 ;StorageLocation=RAM
 DataType=0x0007
 AccessType=rw
-DefaultValue=0x200A0408
+DefaultValue=0x200C0510
 PDOMapping=0
 
 [1A05sub5]
@@ -2095,7 +2094,7 @@ PDOMapping=0
 [1A06]
 ParameterName=TPDO mapping parameter
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x9
 
 [1A06sub0]
@@ -2278,7 +2277,7 @@ PDOMapping=0
 [1F80]
 ParameterName=NMT startup
 ObjectType=0x7
-;StorageLocation=ROM
+;StorageLocation=RAM
 DataType=0x0007
 AccessType=rw
 DefaultValue=0x00000000
@@ -2337,6 +2336,7 @@ DataType=0x0006
 AccessType=rww
 DefaultValue=0
 PDOMapping=1
+;TPDODetectCos=1
 
 [6300]
 ParameterName=Write output 16-bit
@@ -2412,6 +2412,7 @@ DataType=0x0002
 AccessType=ro
 DefaultValue=
 PDOMapping=1
+;TPDODetectCos=1
 
 [6400sub2]
 ParameterName=Analogue input 02h
@@ -2421,6 +2422,7 @@ DataType=0x0002
 AccessType=ro
 DefaultValue=
 PDOMapping=1
+;TPDODetectCos=1
 
 [6400sub3]
 ParameterName=Analogue input 03h
@@ -2439,6 +2441,7 @@ DataType=0x0002
 AccessType=ro
 DefaultValue=
 PDOMapping=1
+;TPDODetectCos=1
 
 [6400sub5]
 ParameterName=Analogue input 05h
@@ -2448,6 +2451,7 @@ DataType=0x0002
 AccessType=ro
 DefaultValue=
 PDOMapping=1
+;TPDODetectCos=1
 
 [6400sub6]
 ParameterName=Analogue input 06h
@@ -2457,6 +2461,7 @@ DataType=0x0002
 AccessType=ro
 DefaultValue=
 PDOMapping=1
+;TPDODetectCos=1
 
 [6400sub7]
 ParameterName=Analogue input 07h
@@ -2466,6 +2471,7 @@ DataType=0x0002
 AccessType=ro
 DefaultValue=
 PDOMapping=1
+;TPDODetectCos=1
 
 [6400sub8]
 ParameterName=Analogue input 08h
@@ -2475,6 +2481,7 @@ DataType=0x0002
 AccessType=ro
 DefaultValue=
 PDOMapping=1
+;TPDODetectCos=1
 
 [6400sub9]
 ParameterName=Analogue input 09h
@@ -2484,6 +2491,7 @@ DataType=0x0002
 AccessType=ro
 DefaultValue=
 PDOMapping=1
+;TPDODetectCos=1
 
 [6400subA]
 ParameterName=Analogue input 0Ah
@@ -2493,6 +2501,7 @@ DataType=0x0002
 AccessType=ro
 DefaultValue=
 PDOMapping=1
+;TPDODetectCos=1
 
 [6400subB]
 ParameterName=Analogue input 0Bh
@@ -2571,7 +2580,6 @@ DataType=0x0003
 AccessType=ro
 DefaultValue=0
 PDOMapping=1
-;TPDODetectCos=1
 
 [6401sub2]
 ParameterName=Analog Input 02h
@@ -2581,7 +2589,6 @@ DataType=0x0003
 AccessType=ro
 DefaultValue=0
 PDOMapping=1
-;TPDODetectCos=1
 
 [6401sub3]
 ParameterName=Analog Input 03h
@@ -2591,7 +2598,6 @@ DataType=0x0003
 AccessType=ro
 DefaultValue=0
 PDOMapping=1
-;TPDODetectCos=1
 
 [6401sub4]
 ParameterName=Analog Input 04h
@@ -2601,7 +2607,6 @@ DataType=0x0003
 AccessType=ro
 DefaultValue=0
 PDOMapping=1
-;TPDODetectCos=1
 
 [6401sub5]
 ParameterName=Analog Input 05h
@@ -2611,7 +2616,6 @@ DataType=0x0003
 AccessType=ro
 DefaultValue=0
 PDOMapping=1
-;TPDODetectCos=1
 
 [6401sub6]
 ParameterName=Analog Input 06h
@@ -2621,7 +2625,6 @@ DataType=0x0003
 AccessType=ro
 DefaultValue=0
 PDOMapping=1
-;TPDODetectCos=1
 
 [6401sub7]
 ParameterName=Analog Input 07h
@@ -2631,7 +2634,6 @@ DataType=0x0003
 AccessType=ro
 DefaultValue=0
 PDOMapping=1
-;TPDODetectCos=1
 
 [6401sub8]
 ParameterName=Analog Input 08h
@@ -2641,7 +2643,6 @@ DataType=0x0003
 AccessType=ro
 DefaultValue=0
 PDOMapping=1
-;TPDODetectCos=1
 
 [6401sub9]
 ParameterName=Analog Input 09h
@@ -2651,7 +2652,6 @@ DataType=0x0003
 AccessType=ro
 DefaultValue=0
 PDOMapping=1
-;TPDODetectCos=1
 
 [6401subA]
 ParameterName=Analog Input 0Ah
@@ -2661,7 +2661,6 @@ DataType=0x0003
 AccessType=ro
 DefaultValue=0
 PDOMapping=1
-;TPDODetectCos=1
 
 [6401subB]
 ParameterName=Analog Input 0Bh
@@ -2671,7 +2670,6 @@ DataType=0x0003
 AccessType=ro
 DefaultValue=0
 PDOMapping=1
-;TPDODetectCos=1
 
 [6401subC]
 ParameterName=Analog Input 0Ch
@@ -2681,7 +2679,6 @@ DataType=0x0003
 AccessType=ro
 DefaultValue=0
 PDOMapping=1
-;TPDODetectCos=1
 
 [6401subD]
 ParameterName=Analog Input 0Dh
@@ -2691,7 +2688,6 @@ DataType=0x0003
 AccessType=ro
 DefaultValue=0
 PDOMapping=1
-;TPDODetectCos=1
 
 [6401subE]
 ParameterName=Analog Input 0Eh
@@ -2701,7 +2697,6 @@ DataType=0x0003
 AccessType=ro
 DefaultValue=0
 PDOMapping=1
-;TPDODetectCos=1
 
 [6401subF]
 ParameterName=Analog Input 0Fh
@@ -2711,7 +2706,6 @@ DataType=0x0003
 AccessType=ro
 DefaultValue=0
 PDOMapping=1
-;TPDODetectCos=1
 
 [6401sub10]
 ParameterName=Analog Input 10h
@@ -2721,7 +2715,6 @@ DataType=0x0003
 AccessType=ro
 DefaultValue=0
 PDOMapping=1
-;TPDODetectCos=1
 
 [67FE]
 ParameterName=Error Behaviour
@@ -2809,7 +2802,7 @@ PDOMapping=0
 [2002]
 ParameterName=Config Port
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x8
 
 [2002sub0]
@@ -2887,7 +2880,7 @@ PDOMapping=0
 [2003]
 ParameterName=Config Port
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x8
 
 [2003sub0]
@@ -2965,7 +2958,7 @@ PDOMapping=0
 [2004]
 ParameterName=Config Port
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x8
 
 [2004sub0]
@@ -3043,7 +3036,7 @@ PDOMapping=0
 [2005]
 ParameterName=Config ADC
 ObjectType=0x9
-;StorageLocation=ROM
+;StorageLocation=RAM
 SubNumber=0x3
 
 [2005sub0]
@@ -3411,7 +3404,7 @@ PDOMapping=1
 [2101]
 ParameterName=Power-on counter
 ObjectType=0x7
-;StorageLocation=EEPROM
+;StorageLocation=RAM
 DataType=0x0007
 AccessType=ro
 DefaultValue=0
