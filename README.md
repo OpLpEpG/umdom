@@ -120,6 +120,11 @@ typedef struct{
 ..........
 
 ```
+## enable  RPDO_CALLS_EXTENSION in file CO_PDO.c
+```
+#define RPDO_CALLS_EXTENSION - uncomment
+#include <string.h> - add to hide warning
+```
 
 ## Pack GPIOs read set reset index 0x2080
 ```

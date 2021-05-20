@@ -3,27 +3,26 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
- #include <arm/st/f1/stm32f103XB.dtsi>
-//  #include <../boards/arm/stm32_min_dev/stm32_min_dev.dtsi>
+ #include <st/f1/stm32f103XB.dtsi>
 / {
 	chosen {
 		zephyr,can-primary = &can1;
 		zephyr,code-partition = &slot0_partition;
 	};
 
-	keys {
-		compatible = "gpio-keys";
+	// keys {
+	// 	compatible = "gpio-keys";
 
-		key: key {
-			gpios = <&gpiob 12 GPIO_PULL_UP>;
-			label = "KEY";
-		};
-	};
+	// 	key: key {
+	// 		gpios = <&gpiob 12 GPIO_PULL_UP>;
+	// 		label = "KEY";
+	// 	};
+	// };
 
 	aliases {
 		green-led = &led;
 		red-led = &led;
-		sw0 = &key;
+		// sw0 = &key;
 	};
 };
 
@@ -85,6 +84,10 @@
 	// 125.000   pre=24 8,3
 	//  50.000   pre=60 8,3
 	bus-speed=<125000>;
+	status = "okay";
+};
+
+&usart1 {
 	status = "okay";
 };
 

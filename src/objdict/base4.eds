@@ -8,8 +8,8 @@ Description=
 CreationTime=2:52PM
 CreationDate=09-18-2019
 CreatedBy=
-ModificationTime=10:26AM
-ModificationDate=05-18-2021
+ModificationTime=3:18PM
+ModificationDate=05-19-2021
 ModifiedBy=
 
 [DeviceInfo]
@@ -750,7 +750,7 @@ ObjectType=0x7
 ;StorageLocation=RAM
 DataType=0x0005
 AccessType=rw
-DefaultValue=2
+DefaultValue=1
 PDOMapping=0
 
 [1600sub1]
@@ -759,7 +759,7 @@ ObjectType=0x7
 ;StorageLocation=RAM
 DataType=0x0007
 AccessType=rw
-DefaultValue=0x20800410
+DefaultValue=0x20800420
 PDOMapping=0
 
 [1600sub2]
@@ -768,7 +768,7 @@ ObjectType=0x7
 ;StorageLocation=RAM
 DataType=0x0007
 AccessType=rw
-DefaultValue=0x20800510
+DefaultValue=0x63000310
 PDOMapping=0
 
 [1600sub3]
@@ -777,7 +777,7 @@ ObjectType=0x7
 ;StorageLocation=RAM
 DataType=0x0007
 AccessType=rw
-DefaultValue=0x63000310
+DefaultValue=0x63000410
 PDOMapping=0
 
 [1600sub4]
@@ -786,7 +786,7 @@ ObjectType=0x7
 ;StorageLocation=RAM
 DataType=0x0007
 AccessType=rw
-DefaultValue=0x63000410
+DefaultValue=0
 PDOMapping=0
 
 [1600sub5]
@@ -3335,7 +3335,7 @@ PDOMapping=1
 ParameterName=GPIO pack
 ObjectType=0x9
 ;StorageLocation=RAM
-SubNumber=0x6
+SubNumber=0x5
 
 [2080sub0]
 ParameterName=Highest sub-index supported
@@ -3343,7 +3343,7 @@ ObjectType=0x7
 ;StorageLocation=RAM
 DataType=0x0005
 AccessType=ro
-DefaultValue=0x05
+DefaultValue=0x04
 PDOMapping=0
 
 [2080sub1]
@@ -3375,19 +3375,10 @@ PDOMapping=1
 ;TPDODetectCos=1
 
 [2080sub4]
-ParameterName=Set
+ParameterName=SetReset
 ObjectType=0x7
 ;StorageLocation=RAM
-DataType=0x0006
-AccessType=wo
-DefaultValue=
-PDOMapping=1
-
-[2080sub5]
-ParameterName=Reset
-ObjectType=0x7
-;StorageLocation=RAM
-DataType=0x0006
+DataType=0x0007
 AccessType=wo
 DefaultValue=
 PDOMapping=1

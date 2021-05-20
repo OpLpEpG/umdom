@@ -41,7 +41,7 @@
    FILE INFO:
       FileName:     base4.xdd
       FileVersion:  1
-      CreationTime: 2:52PM
+      CreationTime: 2:52
       CreationDate: 09-18-2019
       CreatedBy:    
 *******************************************************************************/
@@ -182,8 +182,7 @@
                UNSIGNED16     inputMask;
                UNSIGNED16     outputMask;
                UNSIGNED16     state;
-               UNSIGNED16     set;
-               UNSIGNED16     reset;
+               UNSIGNED32     setReset;
                }              OD_GPIOPack_t;
 
 /*******************************************************************************
@@ -682,8 +681,7 @@
         #define OD_2080_1_GPIOPack_inputMask                        1
         #define OD_2080_2_GPIOPack_outputMask                       2
         #define OD_2080_3_GPIOPack_state                            3
-        #define OD_2080_4_GPIOPack_set                              4
-        #define OD_2080_5_GPIOPack_reset                            5
+        #define OD_2080_4_GPIOPack_setReset                         4
 
 /*2100 */
         #define OD_2100_errorStatusBits                             0x2100

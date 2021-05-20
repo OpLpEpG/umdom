@@ -10,7 +10,7 @@
 #include <logging/log.h>
 LOG_MODULE_REGISTER(gpios);
 
-#define GPIO_INPUT_INT_EDGE (GPIO_INT_EDGE_BOTH | GPIO_INPUT)
+// #define GPIO_INPUT_INT_EDGE (GPIO_INT_EDGE_BOTH | GPIO_INPUT)
 
 struct gpio_conf {
     const uint16_t index;
@@ -66,10 +66,12 @@ static inline void update_pack_iomask(void)
     uint16_t mb = gpios[1].od_conf->inputMask;
     uint16_t mc = gpios[2].od_conf->inputMask;
     OD_GPIOPack.inputMask = abc_to_pack(ma,mb,mc);
+    LOG_INF("OD_GPIOPack.inputMask %x", OD_GPIOPack.inputMask);
     ma = gpios[0].od_conf->outputMask;
     mb = gpios[1].od_conf->outputMask;
     mc = gpios[2].od_conf->outputMask;
     OD_GPIOPack.outputMask = abc_to_pack(ma,mb,mc);
+    LOG_INF("OD_GPIOPack.outputMask %x", OD_GPIOPack.outputMask);
 }
 
 static inline void update_pack_State(void)
@@ -97,8 +99,52 @@ static void gpio_input_work(struct k_work *item)
     *conf->od_inp = (conf->od_conf->inputMask | conf->od_conf->outputMask) & v; // all input and output physical pin state
     CO_UNLOCK_OD();
     update_pack_State();
-    LOG_INF("Update input");
+    // LOG_INF("Update input");
 }    
+
+static CO_SDO_abortCode_t odf_2080_GPIO_pack(CO_ODF_arg_t *odf_arg)
+{
+    if (!odf_arg->reading && (odf_arg->subIndex == 4)) 
+    {
+        if (OD_GPIOPack.setReset)
+        {
+            uint16_t pin[3];
+
+            uint16_t set = OD_GPIOPack.setReset;
+
+            if (set)
+            {
+                pack_to_abc(set, &pin[0], &pin[1], &pin[2]);
+                for (size_t i = 0; i < 3; i++)
+                {
+                    if (pin[i])
+                    {
+                       gpio_port_set_bits_raw(gpios[i].dev, pin[i]); 
+                       k_work_submit(&gpios[i].work);
+                    }
+                }
+            }
+            else 
+            {
+                uint16_t res = OD_GPIOPack.setReset >> 16;
+                pack_to_abc(res, &pin[0], &pin[1], &pin[2]);
+                for (size_t i = 0; i < 3; i++)
+                {
+                    if (pin[i])
+                    {
+                       gpio_port_clear_bits_raw(gpios[i].dev, pin[i]); 
+                       k_work_submit(&gpios[i].work);
+                    }
+                }
+            }
+            CO_LOCK_OD();
+            OD_GPIOPack.setReset = 0;
+            CO_UNLOCK_OD();
+        }
+    }
+    return CO_SDO_AB_NONE;    
+}
+
 
 static bool FlagUpdateODF;
 
@@ -165,12 +211,30 @@ static const struct device* gpio_init(struct gpio_conf *conf)
                 }
                 else if (conf->od_conf->inputMask & mask)     
                 {
-                    f = GPIO_INPUT_INT_EDGE;
+                    f = GPIO_INPUT | GPIO_INT_EDGE_BOTH;
                     if (conf->od_conf->inputPullUp & mask) f |= GPIO_PULL_UP;
                     else if(conf->od_conf->inputPullDown  & mask) f |= GPIO_PULL_DOWN;
                 }
                 else f = GPIO_DISCONNECTED;
-                gpio_pin_configure(conf->dev, pin, f);
+
+                if (f)
+                {
+                    int err = gpio_pin_configure(conf->dev, pin, f);
+                
+                    if (err) {
+                        LOG_ERR("failed to add input gpio pin configure %s", conf->dev->name);
+                    }
+                    if (f & GPIO_INT_ENABLE)
+                    {
+                        err = gpio_pin_interrupt_configure(conf->dev, pin, f);
+                        if (err) {
+                            LOG_ERR("failed to add input gpio interrupt configure %s %d %x err:%d", conf->dev->name, pin, f, err);
+                        }
+                        else{
+                            LOG_INF("add input gpio interrupt %s %d %x", conf->dev->name, pin, f);
+                        }
+                    }
+                }
             }         
         }   
         if (conf->od_conf->inputMask)
@@ -197,6 +261,9 @@ static const struct device* gpio_init(struct gpio_conf *conf)
 void gpios_init(void)
 {
     struct gpio_conf *p = &gpios[0];
+
+    CO_OD_configure(CO->SDO[0], 0x2080, odf_2080_GPIO_pack, NULL, 0U, 0U);
+
     for (size_t i = 0; i < ARRAY_SIZE(gpios); i++)
     {
         gpio_init(p);
@@ -211,11 +278,6 @@ void gpios_init(void)
     }
     update_pack_iomask();    
 }
-
-// static inline int check_out(const OD_configPort_t* conf, uint16_t out)
-// {
-//     return (out & ~conf->outputMask)?0:1;
-// }
 
 void gpios_process(uint16_t timeDifference_ms)
 {
@@ -262,34 +324,5 @@ void gpios_process(uint16_t timeDifference_ms)
 
             update_pack_iomask();
         }
-        if (OD_GPIOPack.set)
-        {
-            uint16_t a,b,c;
-
-            pack_to_abc(OD_GPIOPack.set, &a, &b, &c);
-
-            if (a) gpio_port_set_bits_raw(gpios[0].dev, a);
-            if (b) gpio_port_set_bits_raw(gpios[1].dev, a);
-            if (c) gpio_port_set_bits_raw(gpios[2].dev, a);
-
-            CO_LOCK_OD();
-            OD_GPIOPack.set = 0;
-            CO_UNLOCK_OD();
-        }
-        if (OD_GPIOPack.reset)
-        {
-            uint16_t a,b,c;
-
-            pack_to_abc(OD_GPIOPack.reset, &a, &b, &c);
-
-            if (a) gpio_port_clear_bits_raw(gpios[0].dev, a);
-            if (b) gpio_port_clear_bits_raw(gpios[1].dev, a);
-            if (c) gpio_port_clear_bits_raw(gpios[2].dev, a);
-
-            CO_LOCK_OD();
-            OD_GPIOPack.reset = 0;
-            CO_UNLOCK_OD();
-        }
-    }
-    
+    }    
 }
