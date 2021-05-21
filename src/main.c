@@ -121,6 +121,23 @@ void main(void)
 				 */
 				k_sleep(K_MSEC(timeout));
 				uint16_t dt = (uint16_t) (k_uptime_get() - timestamp);
+
+				if (OD_RTR)
+				{
+					for(uint8_t i=0; i<CO_NO_TPDO; i++)
+					{
+						CO->TPDO[i]->sendRequest = 1;
+					}	
+					CO_LOCK_OD();
+					OD_RTR = 0;
+					CO_UNLOCK_OD();
+				}
+
+				if (CO_isError(CO->em, CO_EM_SYNC_TIME_OUT) && (CO->SYNC->timer < CO->SYNC->periodTimeoutTime))
+				{
+					CO_errorReset(CO->em, CO_EM_SYNC_TIME_OUT, 0);
+				}
+
 				sensors_process(dt);
 				adcs_process(dt);
 				gpios_process(dt);

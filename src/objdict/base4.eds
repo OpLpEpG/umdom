@@ -8,8 +8,8 @@ Description=
 CreationTime=2:52PM
 CreationDate=09-18-2019
 CreatedBy=
-ModificationTime=3:18PM
-ModificationDate=05-19-2021
+ModificationTime=2:05PM
+ModificationDate=05-21-2021
 ModifiedBy=
 
 [DeviceInfo]
@@ -288,7 +288,7 @@ ObjectType=0x7
 ;StorageLocation=RAM
 DataType=0x0007
 AccessType=rw
-DefaultValue=0
+DefaultValue=10000000
 PDOMapping=0
 
 [1007]
@@ -3393,11 +3393,11 @@ DefaultValue=00000000000000000000
 PDOMapping=1
 
 [2101]
-ParameterName=Power-on counter
+ParameterName=RTR
 ObjectType=0x7
 ;StorageLocation=RAM
-DataType=0x0007
-AccessType=ro
+DataType=0x0005
+AccessType=wo
 DefaultValue=0
 PDOMapping=1
 

@@ -41,7 +41,7 @@
    FILE INFO:
       FileName:     base4.xdd
       FileVersion:  1
-      CreationTime: 2:52
+      CreationTime: 2:52PM
       CreationDate: 09-18-2019
       CreatedBy:    
 *******************************************************************************/
@@ -687,7 +687,7 @@
         #define OD_2100_errorStatusBits                             0x2100
 
 /*2101 */
-        #define OD_2101_powerOnCounter                              0x2101
+        #define OD_2101_RTR                                         0x2101
 
 /*6100 */
         #define OD_6100_readInput16Bit                              0x6100
@@ -804,7 +804,7 @@ struct sCO_OD_RAM{
 /*200C      */ OD_BME280_t     BME280[2];
 /*2080      */ OD_GPIOPack_t   GPIOPack;
 /*2100      */ OCTET_STRING   errorStatusBits[10];
-/*2101      */ UNSIGNED32     powerOnCounter;
+/*2101      */ UNSIGNED8      RTR;
 /*6100      */ UNSIGNED16      readInput16Bit[4];
 /*6300      */ UNSIGNED16      writeOutput16Bit[4];
 /*6400      */ INTEGER8        readAnalogueInput8Bit[16];
@@ -987,8 +987,8 @@ extern struct sCO_OD_EEPROM CO_OD_EEPROM;
         #define OD_errorStatusBits                                  CO_OD_RAM.errorStatusBits
         #define ODL_errorStatusBits_stringLength                    10
 
-/*2101, Data Type: UNSIGNED32 */
-        #define OD_powerOnCounter                                   CO_OD_RAM.powerOnCounter
+/*2101, Data Type: UNSIGNED8 */
+        #define OD_RTR                                              CO_OD_RAM.RTR
 
 /*6100, Data Type: UNSIGNED16, Array[4] */
         #define OD_readInput16Bit                                   CO_OD_RAM.readInput16Bit
