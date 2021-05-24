@@ -224,7 +224,7 @@ static int sample_fetch_BME280(const struct sensor_config * sens)
         od->humid = sv.val1;
         CO_UNLOCK_OD();
 	    sensor_channel_get(d, SENSOR_CHAN_PRESS, &sv);
-        int32_t press = (sv.val1*1000 + sv.val2/1000)/133;
+        int16_t press = (sv.val1*1000 + sv.val2/1000)/133;
         CO_LOCK_OD();
         od->press = press;
         CO_UNLOCK_OD();
@@ -259,7 +259,7 @@ static int sample_fetch_AM2320(const struct sensor_config * sens)
     return ret;
 }
 
-static const struct device* check_dev(const struct sensor_config* sens,void *od_data)
+static void check_dev(const struct sensor_config* sens,void *od_data)
 {
     const struct device * d = device_get_binding(sens->name);
     sens->data->od_data = od_data;
@@ -267,7 +267,6 @@ static const struct device* check_dev(const struct sensor_config* sens,void *od_
 	if (d == NULL) {
 		// No such node, or the node does not have status "okay".
 		LOG_ERR("%s Error: no device found.", sens->name);
-        // return NULL;
 	}
     else {
 	    const struct device* bus = to_bus(d);
@@ -276,12 +275,11 @@ static const struct device* check_dev(const struct sensor_config* sens,void *od_
 		    LOG_ERR("Error: Device \"%s %s\" is not ready; "
                     "check the driver initialization logs for errors.",
 		            d->name, bus->name);
-		    // return NULL;
 	    }
 	    LOG_DBG("Found device \"%s  %s\", getting sensor data\n", d->name, bus->name);
     }
     sens->data->dev = d;
-    return d;
+    sens->sample_fetch(sens);
 }
 
 
@@ -292,32 +290,17 @@ void sensors_init(void)
     #ifdef OD_BH1750   
         OD_BH1750_t* od_BH1750 = (OD_BH1750_t*) &OD_BH1750;
         while (sens->sample_fetch == sample_fetch_BH1750)
-        {
-            check_dev(sens, od_BH1750);
-            sens->sample_fetch(sens);
-            od_BH1750++;
-            sens++;
-        };
+            check_dev(sens++, od_BH1750++);
     #endif
     #ifdef OD_BME280  
         OD_BME280_t* od_BME280 = (OD_BME280_t*) &OD_BME280;
         while (sens->sample_fetch == sample_fetch_BME280)
-        {
-            check_dev(sens, od_BME280);
-            sens->sample_fetch(sens);
-            od_BME280++;
-            sens++;
-        };
+            check_dev(sens++, od_BME280++);
     #endif
     #ifdef OD_AM2320   
         OD_AM2320_t* od_AM2320 = (OD_AM2320_t*) &OD_AM2320;
         while (sens->sample_fetch == sample_fetch_AM2320)
-        {
-            check_dev(sens, od_AM2320);
-            sens->sample_fetch(sens);
-            od_AM2320++;
-            sens++;
-        };
+            check_dev(sens++, od_AM2320++);
     #endif
 }
 
