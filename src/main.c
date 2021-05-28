@@ -15,6 +15,9 @@
 #include <kernel/thread.h>
 #include <canbus/canopen.h>
 
+#ifdef CONFIG_SHELL_BACKEND_CANOPEN
+  #include "driver/shell/shell_canopen.h"
+#endif
 #include "process_sensor.h"
 #include "process_adc.h"
 #include "process_gpio.h"
@@ -81,6 +84,7 @@ void main(void)
 			LOG_ERR("CO_init failed (err = %d)", err);
 			return;
 		}
+		
 		LOG_INF("CANopen stack initialized");
 
 		#ifdef CONFIG_CANOPEN_STORAGE
@@ -91,6 +95,10 @@ void main(void)
     	canopen_leds_init(CO->NMT, led_callback, NULL, NULL, NULL); 
 		#endif /* CONFIG_CANOPEN_LEDS */
 
+
+		#ifdef CONFIG_SHELL_BACKEND_CANOPEN
+		shell_canopen_init_od();
+		#endif
 		sensors_init();
 		adcs_init();
 		gpios_init();
@@ -124,7 +132,7 @@ void main(void)
 
 				if (OD_RTR)
 				{
-					for(uint8_t i=0; i<CO_NO_TPDO; i++)
+					for(uint8_t i=0; i<CO_NO_TPDO-1; i++)
 					{
 						CO->TPDO[i]->sendRequest = 1;
 					}	
@@ -141,6 +149,9 @@ void main(void)
 				sensors_process(dt);
 				adcs_process(dt);
 				gpios_process(dt);
+				#ifdef CONFIG_SHELL_BACKEND_CANOPEN
+				process_shell();
+				#endif
 				elapsed = (uint32_t)k_uptime_delta(&timestamp);
 			} else {
 				/*

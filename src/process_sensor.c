@@ -18,13 +18,10 @@ struct sensor_data{
 	void  *od_data;
 };
 
-struct sensor_config;
-typedef int (*sample_fetch_fn) (const struct sensor_config* sens);
-
 struct sensor_config {
 	const char *name;
 	const uint16_t od;
-    const sample_fetch_fn sample_fetch;
+    int (* const sample_fetch) (const struct sensor_config* sens);
 	struct sensor_data * const data;
 };
 

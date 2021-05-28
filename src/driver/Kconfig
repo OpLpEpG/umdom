@@ -13,3 +13,4 @@
  rsource "adc/Kconfig"
  rsource "am2320/Kconfig"
  rsource "bh1750/Kconfig"
+ rsource "shell/Kconfig"
