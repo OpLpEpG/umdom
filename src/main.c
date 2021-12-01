@@ -13,7 +13,7 @@
 #include "settings/settings.h"
 #include <drivers/adc.h>
 #include <kernel/thread.h>
-#include <canbus/canopen.h>
+#include <canopennode.h>
 
 #ifdef CONFIG_SHELL_BACKEND_CANOPEN
   #include "driver/shell/shell_canopen.h"
@@ -26,10 +26,12 @@
 #include <logging/log.h>
 LOG_MODULE_REGISTER(app);
 
-#define CAN_INTERFACE DT_CHOSEN_ZEPHYR_CAN_PRIMARY_LABEL
-#define CAN_BITRATE (DT_PROP(DT_CHOSEN(zephyr_can_primary), bus_speed) / 1000)
-#if !defined(DT_CHOSEN_ZEPHYR_CAN_PRIMARY_LABEL)
-#error CANopen CAN interface not set
+#if !DT_HAS_CHOSEN(zephyr_can_primary)
+# error CANopen CAN interface not set
+#else 
+#  define CAN_DT_NAME DT_CHOSEN(zephyr_can_primary)
+#  define CAN_INTERFACE DT_LABEL(CAN_DT_NAME)
+#  define CAN_BITRATE (DT_PROP(CAN_DT_NAME, bus_speed) / 1000)
 #endif
 
 static const struct device *green_led = DEVICE_DT_GET(DT_NODELABEL(gpioc));	
@@ -48,7 +50,7 @@ void main(void)
 	uint32_t elapsed;
 	int64_t timestamp;
 
-#if (CONFIG_CANOPEN_LEDS || CONFIG_DEBUG_LED)  
+#if (CONFIG_CANOPENNODE_LEDS || CONFIG_DEBUG_LED)  
     const struct device *led = device_get_binding("GPIOC");
 	if (led == NULL) {
 		/* No such node, or the node does not have status "okay". */
@@ -61,7 +63,7 @@ void main(void)
 		LOG_ERR("CAN interface not found");
 		return;
 	}
-#ifdef CONFIG_CANOPEN_STORAGE
+#ifdef CONFIG_CANOPENNODE_STORAGE
 	int ret;
 	ret = settings_subsys_init();
 	if (ret) {
@@ -87,11 +89,11 @@ void main(void)
 		
 		LOG_INF("CANopen stack initialized");
 
-		#ifdef CONFIG_CANOPEN_STORAGE
+		#ifdef CONFIG_CANOPENNODE_STORAGE
 		canopen_storage_attach(CO->SDO[0], CO->em);
 		#endif /* CONFIG_CANOPEN_STORAGE */
 
-		#if  ( CONFIG_CANOPEN_LEDS && !CONFIG_DEBUG_LED )
+		#if  ( CONFIG_CANOPENNODE_LEDS && !CONFIG_DEBUG_LED )
     	canopen_leds_init(CO->NMT, led_callback, NULL, NULL, NULL); 
 		#endif /* CONFIG_CANOPEN_LEDS */
 

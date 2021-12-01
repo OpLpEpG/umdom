@@ -4,7 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
  #include <st/f1/stm32f103XB.dtsi>
+ #include <st/f1/stm32f103c(8-b)tx-pinctrl.dtsi>
+
 / {
+	compatible = "st,stm32_min_dev_blue", "st,stm32f103cb";
+
 	chosen {
 		zephyr,can-primary = &can1;
 		zephyr,code-partition = &slot0_partition;
@@ -88,7 +92,7 @@
 };
 
 &usart1 {
-	status = "okay";
+	status = "disabled";
 };
 
 &usart2 {
@@ -176,7 +180,7 @@
 &adc1 {
 	compatible = "st,stm32f1-adc1-ac", "st,stm32-adc";
 	status = "okay";
-	dmas = < &dma1 1 1 0x22C80 0>;
+	//dmas = < &dma1 1 1 0x22C80 0>;
 	trigger = "tim2-cc2";
 	pinctrl-0 = < &adc1_in0_pa0 >,
 				< &adc1_in1_pa1 >,

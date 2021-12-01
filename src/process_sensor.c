@@ -5,7 +5,7 @@
 #include <devicetree.h>
 #include <drivers/sensor.h>
 #include <drivers/i2c.h>
-#include <canbus/canopen.h>
+#include <canopennode.h>
 
 
 #define LOG_LEVEL CONFIG_CANOPEN_LOG_LEVEL

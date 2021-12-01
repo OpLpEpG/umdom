@@ -1,7 +1,7 @@
 #include "shell_canopen.h"
 #include <init.h>
 #include <logging/log.h>
-#include <canbus/canopen.h>
+#include <canopennode.h>
 
 SHELL_CANOPEN_DEFINE(shell_transport_canopen);
 SHELL_DEFINE(shell_canopen, CONFIG_SHELL_PROMPT_CANOPEN, &shell_transport_canopen,
@@ -120,7 +120,9 @@ static int enable_shell_canopen(const struct device *arg)
 	uint32_t level = (CONFIG_SHELL_CANOPEN_INIT_LOG_LEVEL > LOG_LEVEL_DBG) ?
 		      CONFIG_LOG_MAX_LEVEL : CONFIG_SHELL_CANOPEN_INIT_LOG_LEVEL;
 
-	shell_init(&shell_canopen, NULL, true, log_backend, level);
+	struct shell_backend_config_flags f =	SHELL_DEFAULT_BACKEND_CONFIG_FLAGS;	  
+
+	shell_init(&shell_canopen, NULL, f, log_backend, level);
 
 	return 0;
 }

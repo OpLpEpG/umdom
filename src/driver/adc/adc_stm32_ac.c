@@ -27,14 +27,14 @@
 LOG_MODULE_REGISTER(adc1_ac_stm32f1);
 
 #include <drivers/clock_control/stm32_clock_control.h>
-#include <pinmux/stm32/pinmux_stm32.h>
+#include <pinmux/pinmux_stm32.h>
 
 #if !defined(CONFIG_SOC_SERIES_STM32F1X)
 #  error "ADC AC driver only for STM32F1X series."
 #endif
 #define SCAN_COUNT (4*CONFIG_ADC_STM32_AC_CURRENT_OVERSAMPLING)
 
-#define ADCACTGR DT_ENUM_TOKEN(DT_NODELABEL(adc1), trigger)
+#define ADCACTGR DT_STRING_UPPER_TOKEN(DT_NODELABEL(adc1), trigger)
 #if (ADCACTGR == tim2_cc2)
 # define ADC_TIMER timers2
 # define ADC_TIMER_CH LL_TIM_CHANNEL_CH2

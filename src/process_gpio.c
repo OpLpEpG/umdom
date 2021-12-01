@@ -3,7 +3,7 @@
 #include <device.h>
 #include <devicetree.h>
 #include <drivers/gpio.h>
-#include <canbus/canopen.h>
+#include <canopennode.h>
 
 
 #define LOG_LEVEL CONFIG_CANOPEN_LOG_LEVEL
