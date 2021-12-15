@@ -41,7 +41,7 @@
    FILE INFO:
       FileName:     base4.xdd
       FileVersion:  1
-      CreationTime: 2:52PM
+      CreationTime: 2:52
       CreationDate: 09-18-2019
       CreatedBy:    
 *******************************************************************************/
@@ -93,7 +93,7 @@
 /*1026      */ typedef struct {
                UNSIGNED8      highestSubIndexSupported;
                UNSIGNED8      stdIn;
-               UNSIGNED8      stdOut;
+               UNSIGNED64     stdOut;
                }              OD_OSPrompt_t;
 /*1200      */ typedef struct {
                UNSIGNED8      maxSubIndex;

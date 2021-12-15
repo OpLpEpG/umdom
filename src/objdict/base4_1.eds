@@ -1,5 +1,5 @@
 [FileInfo]
-FileName=base4.eds
+FileName=base4_1.eds
 FileVersion=1
 FileRevision=1
 LastEDS=
@@ -8,8 +8,8 @@ Description=
 CreationTime=2:52PM
 CreationDate=09-18-2019
 CreatedBy=
-ModificationTime=2:09PM
-ModificationDate=12-13-2021
+ModificationTime=3:42PM
+ModificationDate=12-01-2021
 ModifiedBy=
 
 [DeviceInfo]
@@ -459,7 +459,7 @@ ObjectType=0x7
 ;StorageLocation=RAM
 DataType=0x0006
 AccessType=rw
-DefaultValue=10000
+DefaultValue=1000
 PDOMapping=0
 
 [1019]
@@ -490,7 +490,7 @@ PDOMapping=0
 ParameterName=StdIn
 ObjectType=0x7
 ;StorageLocation=RAM
-DataType=0x0005
+DataType=0x001B
 AccessType=wo
 DefaultValue=0
 PDOMapping=1
@@ -846,7 +846,7 @@ ObjectType=0x7
 ;StorageLocation=RAM
 DataType=0x0007
 AccessType=rw
-DefaultValue=0x10260108
+DefaultValue=0x10260140
 PDOMapping=0
 
 [1601sub2]

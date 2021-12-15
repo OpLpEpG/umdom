@@ -14,6 +14,7 @@
 #include <drivers/adc.h>
 #include <kernel/thread.h>
 #include <canopennode.h>
+#include <drivers/watchdog.h>
 
 #ifdef CONFIG_SHELL_BACKEND_CANOPEN
   #include "driver/shell/shell_canopen.h"
@@ -25,6 +26,13 @@
 #define LOG_LEVEL CONFIG_CANOPEN_LOG_LEVEL
 #include <logging/log.h>
 LOG_MODULE_REGISTER(app);
+
+#if DT_HAS_COMPAT_STATUS_OKAY(st_stm32_watchdog)
+#define WDT_NODE DT_INST(0, st_stm32_watchdog)
+#define WDT_DEV_NAME DT_LABEL(WDT_NODE)
+#else
+#error "WDT not found"
+#endif
 
 #if !DT_HAS_CHOSEN(zephyr_can_primary)
 # error CANopen CAN interface not set
@@ -42,13 +50,14 @@ static void led_callback(bool value, void *arg)
 }
 
 void main(void)
-{
+{	
 	CO_NMT_reset_cmd_t reset = CO_RESET_NOT;
 	CO_ReturnError_t err;
 	struct canopen_context can;
 	uint16_t timeout;
 	uint32_t elapsed;
 	int64_t timestamp;
+	const struct device *wdt;
 
 #if (CONFIG_CANOPENNODE_LEDS || CONFIG_DEBUG_LED)  
     const struct device *led = device_get_binding("GPIOC");
@@ -114,6 +123,13 @@ void main(void)
 
 		CO_CANsetNormalMode(CO->CANmodule[0]);
 
+		wdt = device_get_binding(WDT_DEV_NAME);
+		if (wdt == NULL) {
+			/* No such node, or the node does not have status "okay". */
+			LOG_ERR("IWDT Error: no device found.");
+		}
+
+
 		while (true) {
 			timeout = 1U; /* default timeout in milliseconds */
 			timestamp = k_uptime_get();
@@ -143,9 +159,11 @@ void main(void)
 					CO_UNLOCK_OD();
 				}
 
-				if (CO_isError(CO->em, CO_EM_SYNC_TIME_OUT) && (CO->SYNC->timer < CO->SYNC->periodTimeoutTime))
+				if (CO->SYNC->timer < CO->SYNC->periodTimeoutTime)
 				{
-					CO_errorReset(CO->em, CO_EM_SYNC_TIME_OUT, 0);
+					wdt_feed(wdt, 0);
+					if (CO_isError(CO->em, CO_EM_SYNC_TIME_OUT))
+						CO_errorReset(CO->em, CO_EM_SYNC_TIME_OUT, 0);
 				}
 
 				sensors_process(dt);
@@ -154,6 +172,7 @@ void main(void)
 				#ifdef CONFIG_SHELL_BACKEND_CANOPEN
 				process_shell();
 				#endif
+
 				elapsed = (uint32_t)k_uptime_delta(&timestamp);
 			} else {
 				/*

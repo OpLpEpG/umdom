@@ -30,6 +30,10 @@
 	};
 };
 
+&iwdg {
+	status = "okay";
+};
+
 &clk_hse {
 	clock-frequency = <DT_FREQ_M(8)>;
 	status = "okay";
@@ -76,6 +80,7 @@
 
 &can1 {
 	pinctrl-0 = <&can_rx_pa11 &can_tx_pa12>;
+	pinctrl-names = "default";
 	sjw = < 1 >;
 	
 	prop-seg=< 0 >;
@@ -114,7 +119,7 @@
 		reg = <0x23>;
 		label = "BH1750_1";
 	};
-	am2320: am2320@5C {
+	am2320: am2320@5c {
 		compatible = "aosong,am2320", "i2c-device";
 		status = "okay";
 		reg = <0x5C>;
@@ -141,7 +146,7 @@
 		reg = <0x23>;
 		label = "BH1750_2";
 	};
-	am23201: am2320@5C {
+	am23201: am2320@5c {
 		compatible = "aosong,am2320", "i2c-device";
 		status = "okay";
 		reg = <0x5C>;

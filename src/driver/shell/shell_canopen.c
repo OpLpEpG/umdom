@@ -70,11 +70,18 @@ void process_shell(void)
 	}
 	// CO_UNLOCK_OD();
 }
+union u64_8x8
+{
+	uint64_t u64;
+	uint8_t b[8];
+};
+
 
 static int write(const struct shell_transport *transport,
 		 const void *data, size_t length, size_t *cnt)
 {
 	const uint8_t *data8 = (const uint8_t *)data;
+
 	if (!CO || CO->TPDO[CO_NO_TPDO-1]->sendRequest) 
 	{
 		*cnt = 0;
@@ -82,11 +89,14 @@ static int write(const struct shell_transport *transport,
 	}
 	else 
 	{
+		uint8_t *p = (uint8_t *) &OD_OSPrompt.stdOut;
+		*cnt = (length > 8) ? 8 : length;
+
 		CO_LOCK_OD();
-		OD_OSPrompt.stdOut = *data8;
+		OD_OSPrompt.stdOut = 0;
+		for(uint8_t i = 0; i < *cnt; i++) *p++ = *data8++;		
 		CO->TPDO[CO_NO_TPDO-1]->sendRequest = 1;
 		CO_UNLOCK_OD();
-		*cnt = 1;
 	}
 	return 0;
 }
